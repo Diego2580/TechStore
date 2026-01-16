@@ -1,0 +1,130 @@
+/* Global styles ported from React project */
+:root {
+	--primary-color: #0d6efd;
+	--dark-bg: #0b0e14;
+}
+
+body {
+	font-family: 'Inter', sans-serif;
+	background-color: #f4f7f6;
+	color: #333;
+}
+
+.product-card {
+	transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+	border: none !important;
+	border-radius: 15px !important;
+	overflow: hidden;
+}
+
+.product-card:hover {
+	transform: translateY(-10px);
+	box-shadow: 0 14px 28px rgba(0,0,0,0.15), 0 10px 10px rgba(0,0,0,0.12) !important;
+}
+
+.hero-gradient {
+	background: linear-gradient(135deg, #021027 0%, #0b2545 100%);
+	border-radius: 0 0 50px 50px;
+}
+
+.btn-premium {
+	border-radius: 50px;
+	padding: 10px 25px;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+}
+
+/* === ACCESIBILIDAD === */
+
+/* Estilos para el enlace de salto de navegación */
+.visually-hidden-focusable:not(:focus):not(:focus-within) {
+	position: absolute !important;
+	width: 1px !important;
+	height: 1px !important;
+	padding: 0 !important;
+	margin: -1px !important;
+	overflow: hidden !important;
+	clip: rect(0, 0, 0, 0) !important;
+	white-space: nowrap !important;
+	border-width: 0 !important;
+}
+
+.visually-hidden-focusable:focus {
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 9999;
+	padding: 1rem 2rem;
+	background: #000;
+	color: #fff;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+/* Mejora de contraste para enlaces en el navbar */
+.navbar-dark .navbar-nav .nav-link.active {
+	color: #ffc107 !important;
+	font-weight: 600;
+}
+
+.navbar-dark .navbar-nav .nav-link:hover,
+.navbar-dark .navbar-nav .nav-link:focus {
+	color: #ffc107 !important;
+}
+
+/* Focus visible para navegación por teclado */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+	outline: 3px solid #ffc107;
+	outline-offset: 2px;
+}
+
+/* Mejor contraste para botones */
+.btn-primary {
+	background-color: #0056b3;
+	border-color: #0056b3;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+	background-color: #004494;
+	border-color: #004494;
+}
+
+.btn-success {
+	background-color: #28a745;
+	border-color: #28a745;
+}
+
+.btn-success:hover,
+.btn-success:focus {
+	background-color: #218838;
+	border-color: #1e7e34;
+}
+
+/* Asegurar que los iconos decorativos no sean anunciados por lectores de pantalla */
+[aria-hidden="true"] {
+	speak: none;
+}
+
+/* Mejora de legibilidad en formularios */
+label {
+	font-weight: 600;
+	margin-bottom: 0.5rem;
+}
+
+input:required,
+textarea:required,
+select:required {
+	border-left: 3px solid #ffc107;
+}
+
+/* Mejora de contraste en textos sobre fondos oscuros */
+.bg-dark .text-muted {
+	color: #d0d0d0 !important;
+}
+

@@ -1,0 +1,52 @@
+<div class="bg-light">
+	<section class="bg-primary text-white text-center py-5 shadow-sm hero-banner" role="banner" aria-label="Hero principal">
+		<div class="container py-4">
+			<h1 class="display-4 fw-bold text-uppercase">TechStore Pro</h1>
+			<p class="lead fs-4 mb-0">Tu socio confiable en tecnología de vanguardia</p>
+		</div>
+	</section>
+
+	<section class="container my-5 text-center" role="region" aria-labelledby="features-heading">
+		<h2 id="features-heading" class="visually-hidden">Características destacadas</h2>
+		<div class="row g-3">
+			@for (item of [
+				{ icon: 'bi-truck', title: 'Envío Rápido', text: 'Entregas en 24-48 horas' },
+				{ icon: 'bi-shield-check', title: 'Garantía Oficial', text: 'Productos 100% originales' },
+				{ icon: 'bi-headset', title: 'Soporte Técnico', text: 'Asesoría especializada' },
+				{ icon: 'bi-credit-card', title: 'Pago Seguro', text: 'Múltiples métodos de pago' }
+			]; track item.title) {
+				<div class="col-md-3">
+					<div class="card h-100 border-0 shadow-sm p-3 card-hover">
+						<i class="bi {{item.icon}} fs-1 text-primary mb-2"></i>
+						<h6 class="fw-bold">{{item.title}}</h6>
+						<p class="small text-muted mb-0">{{item.text}}</p>
+					</div>
+				</div>
+			}
+		</div>
+	</section>
+
+	<section class="container pb-5" id="productos" role="region" aria-labelledby="productos-heading">
+		<h2 id="productos-heading" class="mb-4 fw-bold text-dark border-bottom pb-2">Catálogo de Productos</h2>
+		@if (cargando) {
+			<div class="text-center text-muted" role="status" aria-live="polite">Cargando productos...</div>
+		} @else {
+			<div class="row g-4">
+				@for (p of productos; track p.id) {
+					<div class="col-md-3">
+						<article class="card h-100 shadow-sm border-0">
+							<img [src]="p.imagen || 'https://via.placeholder.com/300'" class="card-img-top product-image" [alt]="'Imagen del producto ' + p.nombre" />
+							<div class="card-body">
+								<h3 class="fw-bold mb-1 h6">{{p.nombre}}</h3>
+								<p class="text-primary fw-bold mb-0 fs-5" aria-label="Precio: {{p.precio}} dólares">${{p.precio}}</p>
+							</div>
+						</article>
+					</div>
+				}
+				@if (productos.length === 0) {
+					<div class="text-muted">No hay productos disponibles.</div>
+				}
+			</div>
+		}
+	</section>
+</div>

@@ -1,0 +1,25 @@
+<div class="container py-5">
+	<div class="row">
+		<div class="col-md-6 mx-auto">
+			<h1 class="text-center fw-bold mb-4">Contacta con Nosotros</h1>
+			
+			<div class="card shadow border-0 p-4" role="main">
+				<form (ngSubmit)="enviarFormulario()" aria-label="Formulario de contacto">
+					<div class="mb-3">
+						<label for="nombre" class="form-label fw-bold">Nombre</label>
+						<input id="nombre" type="text" class="form-control" [(ngModel)]="nombre" name="nombre" required aria-required="true" />
+					</div>
+					<div class="mb-3">
+						<label for="email" class="form-label fw-bold">Correo Electrónico</label>
+						<input id="email" type="email" class="form-control" [(ngModel)]="email" name="email" required aria-required="true" />
+					</div>
+					<div class="mb-3">
+						<label for="mensaje" class="form-label fw-bold">Mensaje</label>
+						<textarea id="mensaje" class="form-control" rows="5" [(ngModel)]="mensaje" name="mensaje" required aria-required="true"></textarea>
+					</div>
+					<button type="submit" class="btn btn-primary w-100 fw-bold" aria-label="Enviar mensaje de contacto">Enviar Mensaje</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

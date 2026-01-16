@@ -1,0 +1,35 @@
+<a href="#main-content" class="visually-hidden-focusable">Saltar al contenido principal</a>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark py-2 shadow-sm sticky-top" role="navigation" aria-label="Navegación principal">
+	<div class="container">
+		<a class="navbar-brand fw-bold d-flex align-items-center" routerLink="/">
+			<i class="bi bi-lightning-charge-fill text-warning me-2"></i>
+			TechStore Pro
+		</a>
+
+		<button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Abrir menú de navegación">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse" id="navbarNav">
+			<ul class="navbar-nav ms-auto small align-items-center">
+				<li class="nav-item"><a class="nav-link px-3" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Inicio</a></li>
+				<li class="nav-item"><a class="nav-link px-3" routerLink="/servicios" routerLinkActive="active">Servicios</a></li>
+				<li class="nav-item"><a class="nav-link px-3" routerLink="/acerca" routerLinkActive="active">Nosotros</a></li>
+				<li class="nav-item"><a class="nav-link px-3" routerLink="/contacto" routerLinkActive="active">Contacto</a></li>
+				
+				<li class="nav-item ms-lg-3">
+					@if (authService.isAuthenticated()) {
+						<div class="d-flex gap-2">
+							<a class="btn btn-success btn-sm px-3" routerLink="/admin">Panel Admin</a>
+							<button class="btn btn-outline-danger btn-sm" (click)="logout()" aria-label="Cerrar sesión">Salir</button>
+						</div>
+					} @else {
+						<a class="nav-link text-warning fw-bold px-3" routerLink="/login">
+							<i class="bi bi-person-lock me-1"></i> Acceso Admin
+						</a>
+					}
+				</li>
+			</ul>
+		</div>
+	</div>
+</nav>

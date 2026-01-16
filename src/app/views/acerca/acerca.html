@@ -1,0 +1,34 @@
+<div class="container py-5">
+	@if (cargando) {
+		<div class="text-center py-5" role="status" aria-live="polite">
+			<div class="spinner-border text-primary" role="status">
+				<span class="visually-hidden">Cargando información...</span>
+			</div>
+			<p class="text-muted mt-3">Cargando...</p>
+		</div>
+	} @else if (empresa) {
+		<article class="row align-items-center">
+			@if (empresa.imagen) {
+				<div class="col-md-6 mb-4 mb-md-0">
+					<img [src]="empresa.imagen" 
+						 alt="Imagen representativa de nuestro equipo y empresa" 
+						 class="img-fluid rounded shadow" />
+				</div>
+			}
+			<div [ngClass]="empresa.imagen ? 'col-md-6' : 'col-md-12'">
+				<h1 class="fw-bold mb-3">{{ empresa.titulo1 }}</h1>
+				<p class="text-muted lead">
+					{{ empresa.descripcion1 }}
+				</p>
+				<h2 class="fw-bold mt-4 h5">{{ empresa.titulo2 }}</h2>
+				<p class="text-muted">
+					{{ empresa.descripcion2 }}
+				</p>
+			</div>
+		</article>
+	} @else {
+		<div class="alert alert-warning" role="alert">
+			No se pudo cargar la información.
+		</div>
+	}
+</div>
