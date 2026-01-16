@@ -1,6 +1,6 @@
 import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CompanyService, CompanyInfo } from '../../services/company.service';
+import { CompanyService, Nosotros } from '../../services/company.service';
 
 @Component({
   selector: 'app-acerca',
@@ -10,24 +10,24 @@ import { CompanyService, CompanyInfo } from '../../services/company.service';
   styleUrl: './acerca.css',
 })
 export class Acerca implements OnInit {
-  empresa: CompanyInfo | null = null;
+  nosotros: Nosotros | null = null;
   cargando = true;
   private companyService = inject(CompanyService);
   private cdr = inject(ChangeDetectorRef);
 
   ngOnInit(): void {
-    this.cargarInformacion();
+    this.cargarNosotros();
   }
 
-  cargarInformacion(): void {
+  cargarNosotros(): void {
     this.cargando = true;
-    this.companyService.getFresh().subscribe({
+    this.companyService.getAll().subscribe({
       next: (data) => {
-        this.empresa = data;
+        this.nosotros = data;
         this.cargando = false;
         this.cdr.markForCheck();
       },
-      error: (err) => {
+      error: () => {
         this.cargando = false;
         this.cdr.markForCheck();
       },

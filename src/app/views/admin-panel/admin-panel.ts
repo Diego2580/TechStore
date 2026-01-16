@@ -2,7 +2,7 @@ import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Product } from '../../services/product';
-import { CompanyService, CompanyInfo } from '../../services/company.service';
+import { CompanyService, Nosotros, TituloDescripcion } from '../../services/company.service';
 import { finalize } from 'rxjs/operators';
 
 interface ProductoForm {
@@ -13,11 +13,9 @@ interface ProductoForm {
 }
 
 interface NosotrosForm {
-  titulo1: string;
-  descripcion1: string;
-  titulo2: string;
-  descripcion2: string;
   imagen: string;
+  titulo_temp: string;
+  descripcion_temp: string;
 }
 
 @Component({
@@ -40,18 +38,17 @@ export class AdminPanel implements OnInit {
     imagen: ''
   };
 
-  // NOSOTROS
-  nosotros: CompanyInfo | null = null;
+  // NOSOTROS (Una sola imagen + múltiples títulos/descripciones)
+  nosotros: Nosotros | null = null;
   cargandoNosotros: boolean = false;
   editandoNosotros: boolean = false;
   
   formularioNosotros: NosotrosForm = {
-    titulo1: '',
-    descripcion1: '',
-    titulo2: '',
-    descripcion2: '',
-    imagen: ''
+    imagen: '',
+    titulo_temp: '',
+    descripcion_temp: ''
   };
+  editandoItemIndex: number | null = null;
 
   private productService = inject(Product);
   private companyService = inject(CompanyService);
@@ -62,24 +59,24 @@ export class AdminPanel implements OnInit {
     this.cargarNosotros();
   }
 
+  // ============ PRODUCTOS ============
+
   cargarProductos(): void {
     this.cargando = true;
     this.productService
-      .getFresh() // Usar getFresh() para obtener datos actualizados sin cache
+      .getFresh()
       .pipe(finalize(() => {
         this.cargando = false;
-        this.cdr.markForCheck(); // Forzar detección de cambios
+        this.cdr.markForCheck();
       }))
       .subscribe({
         next: (data) => {
-          console.log('Productos cargados:', data);
-          this.productos = [...(data ?? [])]; // Crear nuevo array para forzar detección de cambios
-          this.cdr.markForCheck(); // Forzar detección de cambios
+          this.productos = [...(data ?? [])];
+          this.cdr.markForCheck();
         },
-        error: (err) => {
-          console.error('Error al cargar productos:', err);
+        error: () => {
           alert('No pudimos cargar los productos. Intenta de nuevo.');
-          this.cdr.markForCheck(); // Forzar detección de cambios incluso en error
+          this.cdr.markForCheck();
         },
       });
   }
@@ -98,28 +95,24 @@ export class AdminPanel implements OnInit {
     };
 
     if (this.editandoId) {
-      // PUT - Actualizar
       this.productService.update(this.editandoId, objetoProducto).subscribe({
-        next: (productoActualizado) => {
+        next: () => {
           alert('¡Producto actualizado!');
           this.cancelarEdicion();
-          // Recargar la lista completa desde el servidor
           this.cargarProductos();
         },
-        error: (err) => {
+        error: () => {
           alert('Error al actualizar el producto');
         }
       });
     } else {
-      // POST - Crear
       this.productService.create(objetoProducto).subscribe({
-        next: (nuevoProducto) => {
+        next: () => {
           alert('¡Producto creado!');
           this.cancelarEdicion();
-          // Recargar la lista completa desde el servidor
           this.cargarProductos();
         },
-        error: (err) => {
+        error: () => {
           alert('Error al crear el producto');
         }
       });
@@ -152,30 +145,26 @@ export class AdminPanel implements OnInit {
       this.productService.delete(id).subscribe({
         next: () => {
           alert('Eliminado correctamente');
-          // Recargar la lista completa desde el servidor
           this.cargarProductos();
         },
-        error: (err) => {
+        error: () => {
           alert('No se pudo eliminar el producto');
         }
       });
     }
   }
 
-  // ============ MÉTODOS PARA NOSOTROS ============
+  // ============ NOSOTROS ============
 
   cargarNosotros(): void {
     this.cargandoNosotros = true;
     this.companyService.getFresh().subscribe({
       next: (data) => {
         this.nosotros = data;
-        this.cdr.markForCheck();
-      },
-      error: (err) => {
         this.cargandoNosotros = false;
         this.cdr.markForCheck();
       },
-      complete: () => {
+      error: () => {
         this.cargandoNosotros = false;
         this.cdr.markForCheck();
       }
@@ -183,42 +172,120 @@ export class AdminPanel implements OnInit {
   }
 
   editarNosotros(): void {
-    if (this.nosotros) {
-      this.editandoNosotros = true;
-      this.formularioNosotros = {
-        titulo1: this.nosotros.titulo1,
-        descripcion1: this.nosotros.descripcion1,
-        titulo2: this.nosotros.titulo2,
-        descripcion2: this.nosotros.descripcion2,
-        imagen: this.nosotros.imagen
+    this.editandoNosotros = true;
+    
+    // Si no existe nosotros, inicializar uno vacío
+    if (!this.nosotros) {
+      this.nosotros = {
+        imagen: '',
+        titulos_descripciones: []
       };
-      window.scrollTo(0, 0);
     }
+    
+    // Copiar la imagen al formulario
+    this.formularioNosotros = {
+      imagen: this.nosotros.imagen || '',
+      titulo_temp: '',
+      descripcion_temp: ''
+    };
+    
+    window.scrollTo(0, 0);
   }
 
-  guardarNosotros(): void {
-    if (!this.formularioNosotros.titulo1 || !this.formularioNosotros.descripcion1 || !this.formularioNosotros.titulo2 || !this.formularioNosotros.descripcion2) {
-      alert('Por favor completa todos los campos requeridos');
+  agregarTituloDescripcion(): void {
+    if (!this.formularioNosotros.titulo_temp || !this.formularioNosotros.descripcion_temp) {
+      alert('Por favor completa título y descripción');
       return;
     }
 
-    const datosActualizados: CompanyInfo = {
-      id: this.nosotros?.id,
-      titulo1: this.formularioNosotros.titulo1,
-      descripcion1: this.formularioNosotros.descripcion1,
-      titulo2: this.formularioNosotros.titulo2,
-      descripcion2: this.formularioNosotros.descripcion2,
-      imagen: this.formularioNosotros.imagen
+    if (!this.nosotros) {
+      this.nosotros = {
+        imagen: this.formularioNosotros.imagen,
+        titulos_descripciones: []
+      };
+    }
+
+    if (!this.nosotros.titulos_descripciones) {
+      this.nosotros.titulos_descripciones = [];
+    }
+
+    const nuevoTituloDesc: TituloDescripcion = {
+      titulo: this.formularioNosotros.titulo_temp,
+      descripcion: this.formularioNosotros.descripcion_temp
     };
 
-    this.companyService.upsert(datosActualizados).subscribe({
+    // Si estamos editando un ítem, reemplazar; si no, agregar
+    if (this.editandoItemIndex !== null) {
+      this.nosotros.titulos_descripciones[this.editandoItemIndex] = nuevoTituloDesc;
+      this.editandoItemIndex = null;
+    } else {
+      this.nosotros.titulos_descripciones.push(nuevoTituloDesc);
+    }
+    this.formularioNosotros.titulo_temp = '';
+    this.formularioNosotros.descripcion_temp = '';
+    this.cdr.markForCheck();
+  }
+
+  eliminarTituloDescripcion(index: number): void {
+    if (this.nosotros && this.nosotros.titulos_descripciones && confirm('¿Eliminar este título y descripción?')) {
+      this.nosotros.titulos_descripciones.splice(index, 1);
+      this.cdr.markForCheck();
+    }
+  }
+
+  prepararEdicionTituloDescripcion(index: number): void {
+    if (!this.nosotros || !this.nosotros.titulos_descripciones) return;
+    const item = this.nosotros.titulos_descripciones[index];
+    this.formularioNosotros.titulo_temp = item.titulo;
+    this.formularioNosotros.descripcion_temp = item.descripcion;
+    this.editandoItemIndex = index;
+    window.scrollTo(0, 0);
+  }
+
+  guardarNosotros(): void {
+    // Inicializar objeto si no existe
+    if (!this.nosotros) {
+      this.nosotros = { imagen: '', titulos_descripciones: [] };
+    }
+
+    // Validar imagen
+    if (!this.formularioNosotros.imagen) {
+      alert('Por favor completa la imagen');
+      return;
+    }
+
+    // Si hay datos temporales sin agregar, agrégalos automáticamente
+    if (this.formularioNosotros.titulo_temp && this.formularioNosotros.descripcion_temp) {
+      const pendiente: TituloDescripcion = {
+        titulo: this.formularioNosotros.titulo_temp,
+        descripcion: this.formularioNosotros.descripcion_temp,
+      };
+      if (!this.nosotros.titulos_descripciones) this.nosotros.titulos_descripciones = [];
+      this.nosotros.titulos_descripciones.push(pendiente);
+      this.formularioNosotros.titulo_temp = '';
+      this.formularioNosotros.descripcion_temp = '';
+      this.editandoItemIndex = null;
+    }
+
+    if (!this.nosotros.titulos_descripciones || this.nosotros.titulos_descripciones.length === 0) {
+      alert('Por favor agrega al menos un título/descripción');
+      return;
+    }
+
+    // Actualizar la imagen
+    this.nosotros.imagen = this.formularioNosotros.imagen;
+
+    const accion$ = this.nosotros.id ? this.companyService.update(this.nosotros) : this.companyService.create(this.nosotros);
+
+    accion$.subscribe({
       next: () => {
         alert('¡Información actualizada!');
         this.cancelarEdicionNosotros();
         this.cargarNosotros();
       },
       error: (err) => {
-        alert('Error al actualizar la información');
+        console.error('Error al guardar:', err);
+        alert('Error al guardar. Intenta de nuevo.');
       }
     });
   }
@@ -226,11 +293,9 @@ export class AdminPanel implements OnInit {
   cancelarEdicionNosotros(): void {
     this.editandoNosotros = false;
     this.formularioNosotros = {
-      titulo1: '',
-      descripcion1: '',
-      titulo2: '',
-      descripcion2: '',
-      imagen: ''
+      imagen: '',
+      titulo_temp: '',
+      descripcion_temp: ''
     };
   }
 }

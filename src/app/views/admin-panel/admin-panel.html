@@ -3,7 +3,8 @@
 
 	<!-- SECCIÓN NOSOTROS -->
 	<div class="card shadow border-0 p-4 mb-5 bg-light">
-		<h2 class="h4 text-primary mb-3">📝 Editar Sección "Nosotros"</h2>
+		<h2 class="h4 text-primary mb-3">📖 Gestionar Sección "Nosotros"</h2>
+		
 		@if (cargandoNosotros) {
 			<div class="text-center py-3">
 				<div class="spinner-border spinner-border-sm text-primary" role="status">
@@ -11,57 +12,82 @@
 				</div>
 				<p class="text-muted mt-2 small">Cargando información...</p>
 			</div>
-		} @else if (nosotros && !editandoNosotros) {
-			<div class="row">
-				<div class="col-md-8">
-					<p class="mb-2"><strong>{{ nosotros.titulo1 }}</strong></p>
-					<p class="mb-2">{{ nosotros.descripcion1 }}</p>
-					<p class="mb-2 mt-3"><strong>{{ nosotros.titulo2 }}</strong></p>
-					<p class="mb-2">{{ nosotros.descripcion2 }}</p>
-					<p class="mb-3"><strong>Imagen:</strong> <img [src]="nosotros.imagen" style="max-height: 100px; border-radius: 5px;" [alt]="nosotros.titulo1" /></p>
-				</div>
-				<div class="col-md-4">
-					<button type="button" class="btn btn-primary w-100" (click)="editarNosotros()">✏️ Editar</button>
+		} @else if (!editandoNosotros && nosotros && nosotros.titulos_descripciones && nosotros.titulos_descripciones.length > 0) {
+			<div class="alert alert-info">
+				<strong>Imagen:</strong> <img [src]="nosotros.imagen" style="max-height: 80px; border-radius: 3px; margin: 5px 0;" [alt]="'Imagen de nosotros'" onerror="this.style.display='none'" />
+				<div class="mt-3">
+					<strong>Títulos y Descripciones:</strong>
+					<ul class="mt-2">
+						@for (item of nosotros.titulos_descripciones; track $index) {
+							<li class="mb-3 p-2 bg-white rounded border">
+								<strong>{{ item.titulo }}</strong>
+								<p class="text-muted mb-0 small">{{ item.descripcion.substring(0, 100) }}...</p>
+							</li>
+						}
+					</ul>
 				</div>
 			</div>
-		} @else if (editandoNosotros) {
+			<button type="button" class="btn btn-warning" (click)="editarNosotros()">✏️ Editar</button>
+		} @else if (editandoNosotros && nosotros) {
+			<!-- FORMULARIO DE EDICIÓN -->
 			<form (ngSubmit)="guardarNosotros()" class="mt-3">
 				<div class="mb-3">
-					<label for="titulo1" class="form-label fw-bold">Título 1 </label>
-					<input id="titulo1" type="text" class="form-control" [(ngModel)]="formularioNosotros.titulo1" name="titulo1" required aria-required="true" />
-				</div>
-				<div class="mb-3">
-					<label for="descripcion1" class="form-label fw-bold">Descripción </label>
-					<textarea id="descripcion1" class="form-control" [(ngModel)]="formularioNosotros.descripcion1" name="descripcion1" required aria-required="true"></textarea>
-				</div>
-				<div class="mb-3">
-					<label for="titulo2" class="form-label fw-bold">Título 2 </label>
-					<input id="titulo2" type="text" class="form-control" [(ngModel)]="formularioNosotros.titulo2" name="titulo2" required aria-required="true" />
-				</div>
-				<div class="mb-3">
-					<label for="descripcion2" class="form-label fw-bold">Descripción </label>
-					<textarea id="descripcion2" class="form-control" [(ngModel)]="formularioNosotros.descripcion2" name="descripcion2" required aria-required="true"></textarea>
-				</div>
-				<div class="mb-3">
-					<label for="imagen-nosotros" class="form-label fw-bold">URL de Imagen</label>
-					<input id="imagen-nosotros" type="text" class="form-control" placeholder="https://..." [(ngModel)]="formularioNosotros.imagen" name="imagen" />
+					<label for="imagen-nosotros" class="form-label fw-bold">URL de Imagen (Una sola para toda la sección)</label>
+					<input id="imagen-nosotros" type="text" class="form-control" placeholder="https://..." [(ngModel)]="formularioNosotros.imagen" name="imagen" required aria-required="true" />
 					@if (formularioNosotros.imagen) {
 						<div class="mt-2">
 							<small class="text-muted">Previsualización:</small>
-							<img [src]="formularioNosotros.imagen" style="max-height: 150px; border-radius: 5px; margin-top: 5px;" [alt]="formularioNosotros.titulo1" onerror="this.style.display='none'" />
+							<img [src]="formularioNosotros.imagen" style="max-height: 150px; border-radius: 5px; margin-top: 5px;" alt="Preview" onerror="this.style.display='none'" />
 						</div>
 					}
 				</div>
+
+				<hr />
+
+				<h5 class="text-secondary">Agregar Títulos y Descripciones</h5>
+				
+				<div class="mb-3">
+					<label for="titulo-input" class="form-label fw-bold">Título</label>
+					<input id="titulo-input" type="text" class="form-control" [(ngModel)]="formularioNosotros.titulo_temp" name="titulo_temp" placeholder="Ej: Nuestra Misión" />
+				</div>
+
+				<div class="mb-3">
+					<label for="descripcion-input" class="form-label fw-bold">Descripción</label>
+					<textarea id="descripcion-input" class="form-control" [(ngModel)]="formularioNosotros.descripcion_temp" name="descripcion_temp" placeholder="Escribe la descripción aquí..." rows="4"></textarea>
+				</div>
+
+				<button type="button" class="btn btn-info mb-3" (click)="agregarTituloDescripcion()">➕ Agregar Título/Descripción</button>
+
+				@if (nosotros.titulos_descripciones && nosotros.titulos_descripciones.length > 0) {
+					<div class="list-group mb-3">
+						@for (item of nosotros.titulos_descripciones; track $index) {
+							<div class="list-group-item d-flex justify-content-between align-items-start">
+								<div class="flex-grow-1">
+									<h6 class="mb-1">{{ item.titulo }}</h6>
+									<p class="mb-0 text-muted small">{{ item.descripcion.substring(0, 80) }}...</p>
+								</div>
+								<div class="btn-group ms-2">
+									<button type="button" class="btn btn-sm btn-outline-primary" (click)="prepararEdicionTituloDescripcion($index)">✏️ Editar</button>
+									<button type="button" class="btn btn-sm btn-outline-danger" (click)="eliminarTituloDescripcion($index)">🗑️ Eliminar</button>
+								</div>
+							</div>
+						}
+					</div>
+				}
+
 				<div class="d-flex gap-2">
 					<button type="submit" class="btn btn-success flex-grow-1">💾 Guardar</button>
 					<button type="button" class="btn btn-outline-secondary flex-grow-1" (click)="cancelarEdicionNosotros()">❌ Cancelar</button>
 				</div>
 			</form>
+		} @else {
+			<p class="text-muted text-center py-3">No hay información. Edita para comenzar.</p>
+			<button type="button" class="btn btn-info w-100" (click)="editarNosotros()">📝 Crear Información</button>
 		}
 	</div>
 
 	<div class="row" role="main" aria-label="Panel administrativo">
-		<!-- COLUMNA FORMULARIO -->
+		<!-- COLUMNA FORMULARIO PRODUCTOS -->
 		<div class="col-md-5 mb-4">
 			<section class="card shadow border-0 p-4" role="form" aria-labelledby="form-heading">
 				<h2 id="form-heading" [ngClass]="editandoId ? 'text-warning' : 'text-success'" class="h4">
@@ -77,12 +103,12 @@
 						<input id="precio" type="number" class="form-control" [(ngModel)]="formulario.precio" name="precio" required aria-required="true" />
 					</div>
 					<div class="mb-2">
-						<label for="descripcion" class="small fw-bold">Descripción</label>
-						<textarea id="descripcion" class="form-control" [(ngModel)]="formulario.descripcion" name="descripcion" required aria-required="true"></textarea>
+						<label for="descripcion-producto" class="small fw-bold">Descripción</label>
+						<textarea id="descripcion-producto" class="form-control" [(ngModel)]="formulario.descripcion" name="descripcion" required aria-required="true"></textarea>
 					</div>
 					<div class="mb-3">
-						<label for="imagen" class="small fw-bold">URL de Imagen</label>
-						<input id="imagen" type="text" class="form-control" placeholder="https://link-de-la-foto.jpg" [(ngModel)]="formulario.imagen" name="imagen" />
+						<label for="imagen-producto" class="small fw-bold">URL de Imagen</label>
+						<input id="imagen-producto" type="text" class="form-control" placeholder="https://link-de-la-foto.jpg" [(ngModel)]="formulario.imagen" name="imagen" />
 					</div>
 
 					<button type="submit" [ngClass]="editandoId ? 'btn-warning' : 'btn-success'" class="btn w-100 fw-bold" [attr.aria-label]="editandoId ? 'Guardar cambios del producto' : 'Publicar nuevo producto'">
@@ -98,7 +124,7 @@
 			</section>
 		</div>
 
-		<!-- COLUMNA TABLA -->
+		<!-- COLUMNA TABLA PRODUCTOS -->
 		<div class="col-md-7">
 			<section class="card shadow border-0 p-4" role="region" aria-labelledby="inventory-heading">
 				<h2 id="inventory-heading" class="h4">Inventario Actual</h2>

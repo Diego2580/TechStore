@@ -6,24 +6,22 @@
 			</div>
 			<p class="text-muted mt-3">Cargando...</p>
 		</div>
-	} @else if (empresa) {
-		<article class="row align-items-center">
-			@if (empresa.imagen) {
+	} @else if (nosotros) {
+		<article>
+			<div class="row align-items-center mb-5">
 				<div class="col-md-6 mb-4 mb-md-0">
-					<img [src]="empresa.imagen" 
-						 alt="Imagen representativa de nuestro equipo y empresa" 
+					<img [src]="nosotros.imagen" 
+						 alt="Imagen de la sección Nosotros" 
 						 class="img-fluid rounded shadow" />
 				</div>
-			}
-			<div [ngClass]="empresa.imagen ? 'col-md-6' : 'col-md-12'">
-				<h1 class="fw-bold mb-3">{{ empresa.titulo1 }}</h1>
-				<p class="text-muted lead">
-					{{ empresa.descripcion1 }}
-				</p>
-				<h2 class="fw-bold mt-4 h5">{{ empresa.titulo2 }}</h2>
-				<p class="text-muted">
-					{{ empresa.descripcion2 }}
-				</p>
+				<div class="col-md-6">
+					@for (item of nosotros.titulos_descripciones; track $index) {
+						<div class="mb-4">
+							<h2 class="fw-bold mb-3">{{ item.titulo }}</h2>
+							<p class="text-muted lead">{{ item.descripcion }}</p>
+						</div>
+					}
+				</div>
 			</div>
 		</article>
 	} @else {
