@@ -21,7 +21,7 @@ export class CompanyService {
   private http = inject(HttpClient);
   private transferState = inject(TransferState);
   private platformId = inject(PLATFORM_ID);
-  private readonly API_URL = 'https://6942ca8269b12460f312d514.mockapi.io/nosotros';
+  private readonly API_URL = 'http://localhost:8080/api/nosotros';
   private readonly KEY = makeStateKey<Nosotros>('nosotros-cache');
 
   // Obtener información de Nosotros
@@ -34,8 +34,7 @@ export class CompanyService {
       return of(cached);
     }
 
-    return this.http.get<Nosotros[]>(this.API_URL).pipe(
-      map((data) => (Array.isArray(data) && data.length > 0 ? data[0] : ({} as Nosotros))),
+    return this.http.get<Nosotros>(this.API_URL).pipe(
       tap((nosotros) => {
         if (!isBrowser) {
           this.transferState.set(this.KEY, nosotros);
@@ -61,8 +60,6 @@ export class CompanyService {
 
   // Obtener sin cache (para admin)
   getFresh(): Observable<Nosotros> {
-    return this.http.get<Nosotros[]>(this.API_URL).pipe(
-      map((data: any[]) => (Array.isArray(data) && data.length > 0 ? data[0] : ({} as Nosotros)))
-    );
+    return this.http.get<Nosotros>(this.API_URL);
   }
 }

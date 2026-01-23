@@ -14,7 +14,7 @@ export interface Producto {
   providedIn: 'root'
 })
 export class ApiService {
-  private readonly API_URL = 'https://6942ca8269b12460f312d514.mockapi.io/productos';
+  private readonly API_URL = 'http://localhost:8080/api/productos';
 
   constructor(private http: HttpClient) {}
 

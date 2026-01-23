@@ -1,0 +1,43 @@
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+  <div class="card shadow-lg p-4 register-card" role="main" aria-labelledby="register-heading">
+    <h1 id="register-heading" class="text-center mb-4 fw-bold h2">
+      <i class="bi bi-person-plus text-primary me-2" aria-hidden="true"></i>
+      Crear cuenta
+    </h1>
+
+    @if (errorMsg) {
+      <div class="alert alert-danger alert-dismissible fade show" role="alert" aria-live="polite">
+        {{errorMsg}}
+        <button type="button" class="btn-close" (click)="errorMsg = ''" aria-label="Cerrar alerta"></button>
+      </div>
+    }
+
+    @if (successMsg) {
+      <div class="alert alert-success alert-dismissible fade show" role="alert" aria-live="polite">
+        {{successMsg}}
+        <button type="button" class="btn-close" (click)="successMsg = ''" aria-label="Cerrar alerta"></button>
+      </div>
+    }
+
+    <form (ngSubmit)="registrar()" aria-label="Formulario de registro">
+      <div class="mb-3">
+        <label for="usuario" class="form-label fw-bold">Usuario</label>
+        <input id="usuario" type="text" class="form-control" [(ngModel)]="usuario" name="usuario" required aria-required="true" />
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label fw-bold">Contraseña</label>
+        <input id="password" type="password" class="form-control" [(ngModel)]="password" name="password" required aria-required="true" />
+      </div>
+      <div class="mb-4">
+        <label for="confirm" class="form-label fw-bold">Confirmar contraseña</label>
+        <input id="confirm" type="password" class="form-control" [(ngModel)]="confirm" name="confirm" required aria-required="true" />
+      </div>
+      <button type="submit" class="btn btn-primary w-100 fw-bold" aria-label="Registrar nueva cuenta">Registrarme</button>
+    </form>
+
+    <p class="text-muted text-center small mt-3">
+      ¿Ya tienes cuenta? <a routerLink="/login">Inicia sesión</a>
+    </p>
+  </div>
+  
+</div>

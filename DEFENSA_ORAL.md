@@ -1,8 +1,8 @@
-# 📚 DEFENSA ORAL - TechStore Angular
+# 📚 DEFENSA ORAL - TechStore Angular + SpringBoot
 
 ## 🎯 Introducción (30 segundos)
 
-"Mi proyecto es una página web de una tienda tecnológica desarrollada con **Angular 21.1.0**, un framework frontend moderno. El proyecto tiene dos interfaces: una **vista pública** visible para cualquier usuario, y un **panel administrativo** protegido con autenticación, donde se puede actualizar el contenido dinámicamente desde una API MockAPI."
+"Mi proyecto es una página web de una tienda tecnológica desarrollada con **Angular 21.1.0**, un framework frontend moderno, con un backend robusto en **SpringBoot 3.3.0 con PostgreSQL**. El proyecto tiene dos interfaces: una **vista pública** visible para cualquier usuario, y un **panel administrativo** protegido con autenticación, donde se puede actualizar el contenido dinámicamente desde una API REST."
 
 ---
 

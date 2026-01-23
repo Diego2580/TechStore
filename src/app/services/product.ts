@@ -12,7 +12,7 @@ export class Product {
   private http = inject(HttpClient);
   private transferState = inject(TransferState);
   private platformId = inject(PLATFORM_ID);
-  private readonly API_URL = 'https://6942ca8269b12460f312d514.mockapi.io/productos';
+  private readonly API_URL = 'http://localhost:8080/api/productos';
   private readonly PRODUCTS_KEY = makeStateKey<any[]>('productos-cache');
 
   getAll(): Observable<any[]> {
