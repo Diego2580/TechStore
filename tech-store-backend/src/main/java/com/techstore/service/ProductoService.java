@@ -3,17 +3,19 @@ package com.techstore.service;
 import com.techstore.dto.ProductoDTO;
 import com.techstore.model.Producto;
 import com.techstore.repository.ProductoRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 public class ProductoService {
 
     private final ProductoRepository productoRepository;
+
+    public ProductoService(ProductoRepository productoRepository) {
+        this.productoRepository = productoRepository;
+    }
 
     public List<ProductoDTO> getAll() {
         return productoRepository.findAll()
