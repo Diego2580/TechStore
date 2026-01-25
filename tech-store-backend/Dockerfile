@@ -11,4 +11,5 @@ WORKDIR /app
 COPY --from=build /app/target/tech-store-backend-*.jar app.jar
 ENV SPRING_PROFILES_ACTIVE=prod
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# Force prod profile even if env vars are missed by Render
+ENTRYPOINT ["java", "-Dspring.profiles.active=prod", "-jar", "app.jar"]
