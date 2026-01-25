@@ -4,6 +4,7 @@ import { TransferState, makeStateKey } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
 import { tap } from 'rxjs/operators';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +13,7 @@ export class Product {
   private http = inject(HttpClient);
   private transferState = inject(TransferState);
   private platformId = inject(PLATFORM_ID);
-  private readonly API_URL = 'http://localhost:8080/api/productos';
+  private readonly API_URL = `${environment.backendBaseUrl}/api/productos`;
   private readonly PRODUCTS_KEY = makeStateKey<any[]>('productos-cache');
 
   getAll(): Observable<any[]> {

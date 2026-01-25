@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs';
 import { tap, map } from 'rxjs/operators';
 import { TransferState, makeStateKey } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
+import { environment } from '../../environments/environment';
 
 export interface TituloDescripcion {
   titulo: string;
@@ -21,7 +22,7 @@ export class CompanyService {
   private http = inject(HttpClient);
   private transferState = inject(TransferState);
   private platformId = inject(PLATFORM_ID);
-  private readonly API_URL = 'http://localhost:8080/api/nosotros';
+  private readonly API_URL = `${environment.backendBaseUrl}/api/nosotros`;
   private readonly KEY = makeStateKey<Nosotros>('nosotros-cache');
 
   // Obtener información de Nosotros
