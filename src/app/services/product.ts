@@ -17,23 +17,8 @@ export class Product {
   private readonly PRODUCTS_KEY = makeStateKey<any[]>('productos-cache');
 
   getAll(): Observable<any[]> {
-    const isBrowser = isPlatformBrowser(this.platformId);
-
-    // If running in the browser and we already have server-fetched data, reuse it to avoid double calls.
-    if (isBrowser && this.transferState.hasKey(this.PRODUCTS_KEY)) {
-      const cached = this.transferState.get(this.PRODUCTS_KEY, []);
-      this.transferState.remove(this.PRODUCTS_KEY);
-      return of(cached);
-    }
-
-    return this.http.get<any[]>(this.API_URL).pipe(
-      tap((products) => {
-        // Store server response so the client can hydrate without fetching again.
-        if (!isBrowser) {
-          this.transferState.set(this.PRODUCTS_KEY, products ?? []);
-        }
-      }),
-    );
+    // Siempre hacer petición HTTP fresca - el TransferState causaba problemas con cache vacío
+    return this.http.get<any[]>(this.API_URL);
   }
 
   /**

@@ -27,21 +27,8 @@ export class CompanyService {
 
   // Obtener información de Nosotros
   getAll(): Observable<Nosotros> {
-    const isBrowser = isPlatformBrowser(this.platformId);
-
-    if (isBrowser && this.transferState.hasKey(this.KEY)) {
-      const cached = this.transferState.get(this.KEY, {} as Nosotros);
-      this.transferState.remove(this.KEY);
-      return of(cached);
-    }
-
-    return this.http.get<Nosotros>(this.API_URL).pipe(
-      tap((nosotros) => {
-        if (!isBrowser) {
-          this.transferState.set(this.KEY, nosotros);
-        }
-      }),
-    );
+    // Siempre hacer petición HTTP fresca - el TransferState causaba problemas con cache vacío
+    return this.http.get<Nosotros>(this.API_URL);
   }
 
   // Actualizar información de Nosotros
