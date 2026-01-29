@@ -189,7 +189,7 @@ CREATE TABLE productos (
 
 ✅ **Estado:** Operativo  
 ✅ **URL:** https://techstore-hs0k.onrender.com  
-✅ **Método de despliegue:** Git integration (auto-deploy desde rama `Pruebas`)  
+✅ **Método de despliegue:** Git integration (auto-deploy desde rama `main`)  
 ✅ **Build command:** `mvn clean package -DskipTests`  
 ✅ **Start command:** `java -jar target/tech-store-backend-1.0.0.jar`
 
