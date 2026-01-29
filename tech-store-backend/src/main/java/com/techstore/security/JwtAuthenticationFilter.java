@@ -39,6 +39,12 @@ public class JwtAuthenticationFilter implements Filter {
         String path = httpRequest.getRequestURI();
         String method = httpRequest.getMethod();
         
+        // Permitir todas las solicitudes OPTIONS (CORS preflight)
+        if ("OPTIONS".equals(method)) {
+            chain.doFilter(request, response);
+            return;
+        }
+        
         // Verificar si es un endpoint público
         if (isPublicEndpoint(path)) {
             chain.doFilter(request, response);
