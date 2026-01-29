@@ -37,9 +37,16 @@ public class JwtAuthenticationFilter implements Filter {
         HttpServletResponse httpResponse = (HttpServletResponse) response;
         
         String path = httpRequest.getRequestURI();
+        String method = httpRequest.getMethod();
         
         // Verificar si es un endpoint público
         if (isPublicEndpoint(path)) {
+            chain.doFilter(request, response);
+            return;
+        }
+        
+        // Permitir GET a /api/productos y /api/nosotros sin autenticación (para home)
+        if ("GET".equals(method) && (path.contains("/api/productos") || path.contains("/api/nosotros"))) {
             chain.doFilter(request, response);
             return;
         }
