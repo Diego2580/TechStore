@@ -12,6 +12,10 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/nosotros")
 @RequiredArgsConstructor
+@CrossOrigin(origins = {
+    "http://localhost:4200",
+    "https://tech-store-two-pi.vercel.app"
+})
 public class NosotrosController {
 
     private final NosotrosService nosotrosService;
