@@ -24,7 +24,6 @@ public class JwtAuthenticationFilter implements Filter {
     private static final List<String> PUBLIC_ENDPOINTS = Arrays.asList(
             "/api/auth/register",
             "/api/auth/login",
-            "/api/health",
             "/swagger-ui",
             "/v3/api-docs",
             "/swagger-resources"
