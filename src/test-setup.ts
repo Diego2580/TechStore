@@ -12,18 +12,27 @@ getTestBed().initTestEnvironment(
   platformBrowserDynamicTesting(),
 );
 
+// Interface para el mock de localStorage
+interface LocalStorageMock {
+  [key: string]: any;
+  getItem(key: string): string | null;
+  setItem(key: string, value: string): void;
+  removeItem(key: string): void;
+  clear(): void;
+}
+
 // Mock de localStorage para entorno de pruebas
-const localStorageMock = {
-  getItem: (key: string) => {
+const localStorageMock: LocalStorageMock = {
+  getItem: (key: string): string | null => {
     return localStorageMock[key] || null;
   },
-  setItem: (key: string, value: string) => {
+  setItem: (key: string, value: string): void => {
     localStorageMock[key] = value;
   },
-  removeItem: (key: string) => {
+  removeItem: (key: string): void => {
     delete localStorageMock[key];
   },
-  clear: () => {
+  clear: (): void => {
     Object.keys(localStorageMock).forEach((key) => {
       if (key !== 'getItem' && key !== 'setItem' && key !== 'removeItem' && key !== 'clear') {
         delete localStorageMock[key];
