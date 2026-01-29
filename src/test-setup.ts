@@ -13,20 +13,20 @@ getTestBed().initTestEnvironment(
 );
 
 // Mock de localStorage para entorno de pruebas
-const localStorageMock = {
-  getItem: (key: string) => {
-    return localStorageMock[key] || null;
+const localStorageMock: { [key: string]: string; getItem: (key: string) => string | null; setItem: (key: string, value: string) => void; removeItem: (key: string) => void; clear: () => void } = {
+  getItem: (key: string): string | null => {
+    return (localStorageMock as any)[key] || null;
   },
-  setItem: (key: string, value: string) => {
-    localStorageMock[key] = value;
+  setItem: (key: string, value: string): void => {
+    (localStorageMock as any)[key] = value;
   },
-  removeItem: (key: string) => {
-    delete localStorageMock[key];
+  removeItem: (key: string): void => {
+    delete (localStorageMock as any)[key];
   },
-  clear: () => {
+  clear: (): void => {
     Object.keys(localStorageMock).forEach((key) => {
       if (key !== 'getItem' && key !== 'setItem' && key !== 'removeItem' && key !== 'clear') {
-        delete localStorageMock[key];
+        delete (localStorageMock as any)[key];
       }
     });
   },
