@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,9 +33,13 @@ public class ProductoController {
     }
 
     @GetMapping
-    @Operation(summary = "Obtener todos los productos", description = "Devuelve la lista completa de productos disponibles")
-    @ApiResponse(responseCode = "200", description = "Lista de productos obtenida exitosamente",
-            content = @Content(schema = @Schema(implementation = ProductoDTO.class)))
+    @Operation(summary = "Obtener todos los productos", description = "Devuelve la lista completa de productos disponibles", 
+            security = @SecurityRequirement(name = "Bearer Authentication"))
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Lista de productos obtenida exitosamente",
+                    content = @Content(schema = @Schema(implementation = ProductoDTO.class))),
+            @ApiResponse(responseCode = "401", description = "No autenticado - Token faltante o inválido")
+    })
     public ResponseEntity<List<ProductoDTO>> getAll() {
         return ResponseEntity.ok(productoService.getAll());
     }
