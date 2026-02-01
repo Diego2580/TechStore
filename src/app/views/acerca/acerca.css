@@ -1,0 +1,44 @@
+/* src/app/views/acerca/acerca.css */
+
+/* Tarjeta principal de historia */
+.bg-card {
+  background-color: var(--bg-card) !important;
+  color: var(--text-main);
+}
+
+/* Cajas de estadísticas (años, sede) */
+.stat-box {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  transition: transform 0.3s;
+}
+
+.stat-box:hover {
+  border-color: var(--primary);
+  transform: scale(1.02);
+}
+
+/* Cita inspiradora */
+.quote-box {
+  background-color: var(--primary);
+  color: white; /* Siempre blanco porque el fondo es azul primario */
+}
+
+/* Lista de valores */
+.hover-bg {
+  transition: background-color 0.2s;
+  border-radius: 8px;
+}
+
+.hover-bg:hover {
+  background-color: rgba(13, 110, 253, 0.05);
+}
+
+/* Ajuste para modo oscuro en hover */
+:host-context(body.dark-theme) .hover-bg:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+h1, h2, h3 { color: var(--text-main); }
+p, li { color: var(--text-muted); }

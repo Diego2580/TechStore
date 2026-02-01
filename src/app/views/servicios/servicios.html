@@ -1,15 +1,101 @@
-<div class="container py-5">
-	<h1 class="text-center mb-5 fw-bold">Nuestros Servicios</h1>
-	
-	<div class="row g-4" role="list" aria-label="Lista de servicios">
-		@for (servicio of servicios; track servicio.title) {
-			<div class="col-md-6" role="listitem">
-				<article class="card h-100 border-0 shadow-sm p-4">
-					<i class="bi {{servicio.icon}} fs-1 text-primary mb-3" aria-hidden="true"></i>
-					<h2 class="fw-bold mb-2 h5">{{servicio.title}}</h2>
-					<p class="text-muted">{{servicio.desc}}</p>
-				</article>
-			</div>
-		}
-	</div>
+<div class="bg-light min-vh-100 pb-5">
+  
+  <section class="container py-5 text-center">
+    <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill mb-3">Nuestros Servicios</span>
+    <h1 class="display-5 fw-bold mb-3">Soluciones Tecnológicas Completas</h1>
+    <p class="lead text-muted mx-auto" style="max-width: 700px;">
+      Ofrecemos una amplia gama de productos y servicios para satisfacer todas las necesidades empresariales y personales en Cuenca y Ecuador.
+    </p>
+  </section>
+
+  <section class="container pb-5" aria-label="Lista de servicios detallada">
+    <div class="row g-4">
+      
+      <div class="col-md-6 col-lg-4">
+        <article class="service-card">
+          <span class="badge-tag">Desde $599</span>
+          <div class="icon-box">
+            <i class="bi bi-display" aria-hidden="true"></i>
+          </div>
+          <h3 class="h5 fw-bold mb-3">Monitores y Pantallas</h3>
+          <p class="text-muted small">
+            Monitores de alta resolución para gaming, diseño gráfico y oficina. 
+            Desde 24 hasta 49 pulgadas ultrawide.
+          </p>
+        </article>
+      </div>
+
+      <div class="col-md-6 col-lg-4">
+        <article class="service-card">
+          <span class="badge-tag">Intel & AMD</span>
+          <div class="icon-box">
+            <i class="bi bi-cpu" aria-hidden="true"></i>
+          </div>
+          <h3 class="h5 fw-bold mb-3">Procesadores High-End</h3>
+          <p class="text-muted small">
+            Los últimos procesadores Intel Core y AMD Ryzen para máximo rendimiento en renderizado y compilación de código.
+          </p>
+        </article>
+      </div>
+
+      <div class="col-md-6 col-lg-4">
+        <article class="service-card">
+          <span class="badge-tag">NVMe / SSD</span>
+          <div class="icon-box">
+            <i class="bi bi-hdd-network" aria-hidden="true"></i>
+          </div>
+          <h3 class="h5 fw-bold mb-3">Almacenamiento Veloz</h3>
+          <p class="text-muted small">
+            Discos SSD M.2 y soluciones NAS para servidores locales con redundancia de datos.
+          </p>
+        </article>
+      </div>
+
+      <div class="col-md-6 col-lg-4">
+        <article class="service-card">
+          <span class="badge-tag">WiFi 6E</span>
+          <div class="icon-box">
+            <i class="bi bi-router" aria-hidden="true"></i>
+          </div>
+          <h3 class="h5 fw-bold mb-3">Redes y Conectividad</h3>
+          <p class="text-muted small">
+            Routers mesh, switches gestionables y cableado estructurado para tu oficina o hogar.
+          </p>
+        </article>
+      </div>
+
+      <div class="col-md-6 col-lg-4">
+        <article class="service-card">
+          <span class="badge-tag">Enterprise</span>
+          <div class="icon-box">
+            <i class="bi bi-server" aria-hidden="true"></i>
+          </div>
+          <h3 class="h5 fw-bold mb-3">Servidores y DevOps</h3>
+          <p class="text-muted small">
+            Asesoría en CI/CD, configuración de GitLab Runners locales y servidores Linux.
+          </p>
+        </article>
+      </div>
+
+      <div class="col-md-6 col-lg-4">
+        <article class="service-card">
+          <span class="badge-tag">24/7</span>
+          <div class="icon-box">
+            <i class="bi bi-tools" aria-hidden="true"></i>
+          </div>
+          <h3 class="h5 fw-bold mb-3">Servicio Técnico</h3>
+          <p class="text-muted small">
+            Mantenimiento preventivo, limpieza de hardware y reparación de placas con garantía.
+          </p>
+        </article>
+      </div>
+
+    </div>
+    
+    <div class="text-center mt-5">
+      <a routerLink="/contacto" class="btn btn-outline-primary px-4 rounded-pill">
+        Solicitar Cotización Personalizada <i class="bi bi-arrow-right ms-2"></i>
+      </a>
+    </div>
+  </section>
 </div>

@@ -1,7 +1,55 @@
-.navbar-brand {
-  font-size: 1.5rem;
+/* src/app/components/navbar/navbar.css */
+.navbar {
+  /* Usamos bg-card para que se adapte al tema (blanco en claro, oscuro en dark mode) */
+  background-color: var(--bg-card) !important;
+  border-bottom: 1px solid var(--border-color);
+  padding: 1rem 0;
+  transition: background-color 0.3s ease;
 }
 
+.navbar-brand {
+  font-size: 1.5rem;
+  letter-spacing: -0.5px;
+  color: var(--text-main) !important;
+  font-weight: 800;
+}
+
+.nav-link {
+  /* CORRECCIÓN: Color sólido, no transparente */
+  color: var(--text-muted) !important;
+  font-weight: 600;
+  transition: color 0.3s ease;
+  position: relative;
+  opacity: 1 !important; /* Forzamos opacidad total */
+}
+
+.nav-link:hover, 
 .nav-link.active {
-  color: #ffc107 !important;
+  color: var(--primary) !important;
+}
+
+/* Indicador sutil debajo del link activo */
+.nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 1rem;
+  right: 1rem;
+  height: 3px;
+  background-color: var(--primary);
+  border-radius: 2px;
+}
+
+/* Ajuste específico para el botón de toggle en móvil */
+.navbar-toggler {
+  border-color: var(--border-color);
+}
+
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(33, 37, 41, 0.75)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+/* Cambiar icono de hamburguesa en modo oscuro */
+:host-context(body.dark-theme) .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 0.75)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
 }

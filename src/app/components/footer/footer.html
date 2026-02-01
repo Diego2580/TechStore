@@ -1,53 +1,78 @@
-<footer class="bg-dark text-white pt-5 pb-3 mt-auto shadow-lg" role="contentinfo" aria-label="Información de pie de página">
+<footer class="footer-dark pt-5 pb-4 mt-auto" role="contentinfo">
 	<div class="container">
-		<div class="row text-start">
-			<div class="col-md-4 mb-4">
-				<h5 class="fw-bold mb-3 text-white">
+		<div class="row">
+			<div class="col-lg-4 col-md-6 mb-4">
+				<h5 class="fw-bold text-white mb-3 d-flex align-items-center">
 					<i class="bi bi-lightning-charge-fill text-warning me-2" aria-hidden="true"></i>
 					TechStore Pro
 				</h5>
-				<p class="text-light opacity-75 small">
-					Tu socio confiable en tecnología de vanguardia. Calidad garantizada en cada componente.
+				<p class="footer-text mb-4 pe-lg-4">
+					Tu aliado estratégico en tecnología. Proveemos hardware de alto rendimiento para desarrolladores, gamers y empresas en todo Ecuador.
 				</p>
-			</div>
-
-			<div class="col-md-4 mb-4">
-				<h6 class="fw-bold mb-3 text-uppercase small text-primary">Contacto</h6>
-				<div class="d-flex flex-column gap-3">
-					<div class="d-flex align-items-center text-white small">
-						<i class="bi bi-geo-alt text-primary fs-5 me-3"></i>
-						<span>Av. Tecnológica 404, Ciudad Tech</span>
-					</div>
-					<div class="d-flex align-items-center text-white small">
-						<i class="bi bi-telephone text-primary fs-5 me-3"></i>
-						<span>+511 789-4560</span>
-					</div>
-					<div class="d-flex align-items-center text-white small">
-						<i class="bi bi-envelope text-primary fs-5 me-3"></i>
-						<span>info@techstore.com</span>
-					</div>
+				<div class="d-flex">
+					<a href="#" class="social-btn" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+					<a href="#" class="social-btn" aria-label="Twitter"><i class="bi bi-twitter-x"></i></a>
+					<a href="#" class="social-btn" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+					<a href="#" class="social-btn" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
 				</div>
 			</div>
 
-			<div class="col-md-4 mb-4">
-				<h6 class="fw-bold mb-3 text-uppercase small text-primary">Horario</h6>
-				<ul class="list-unstyled small text-white">
-					<li class="mb-2">
-						<span class="fw-bold">Lunes a Viernes:</span> 9:00 - 18:00
+			<div class="col-lg-2 col-md-6 mb-4">
+				<h6 class="footer-title">Enlaces Rápidos</h6>
+				<nav aria-label="Enlaces de pie de página">
+					<ul class="list-unstyled">
+						<li><a routerLink="/" class="footer-link">Inicio</a></li>
+						<li><a routerLink="/servicios" class="footer-link">Servicios</a></li>
+						<li><a routerLink="/acerca" class="footer-link">Nosotros</a></li>
+						<li><a routerLink="/contacto" class="footer-link">Contacto</a></li>
+					</ul>
+				</nav>
+			</div>
+
+			<div class="col-lg-3 col-md-6 mb-4">
+				<h6 class="footer-title">Servicios</h6>
+				<ul class="list-unstyled">
+					<li><span class="footer-text d-block mb-2">Venta de Componentes</span></li>
+					<li><span class="footer-text d-block mb-2">Redes y Servidores</span></li>
+					<li><span class="footer-text d-block mb-2">Soporte DevOps</span></li>
+					<li><span class="footer-text d-block mb-2">Garantía Extendida</span></li>
+				</ul>
+			</div>
+
+			<div class="col-lg-3 col-md-6 mb-4">
+				<h6 class="footer-title">Contacto</h6>
+				<ul class="list-unstyled footer-text">
+					<li class="mb-3 d-flex">
+						<i class="bi bi-geo-alt text-warning me-3 mt-1" aria-hidden="true"></i>
+						<span>Av. Tecnológica 404, Ciudad Tech, Cuenca - Ecuador</span>
 					</li>
-					<li class="mb-2">
-						<span class="fw-bold">Sábados:</span> 10:00 - 14:00
+					<li class="mb-3 d-flex">
+						<i class="bi bi-telephone text-warning me-3 mt-1" aria-hidden="true"></i>
+						<span>+593 7 289-4560</span>
 					</li>
-					<li>
-						<span class="fw-bold text-danger">Domingos:</span> Cerrado
+					<li class="mb-3 d-flex">
+						<i class="bi bi-envelope text-warning me-3 mt-1" aria-hidden="true"></i>
+						<span>info@techstore.ec</span>
 					</li>
 				</ul>
 			</div>
 		</div>
 
-		<hr class="bg-secondary opacity-25" />
-		<div class="text-center text-light opacity-50 mt-3">
-			<small class="small">© 2026 TechStore Pro - Todos los derechos reservados.</small>
+		<hr class="border-secondary opacity-25 my-4" />
+		
+		<div class="row align-items-center">
+			<div class="col-md-6 text-center text-md-start">
+				<small class="footer-text">© 2026 TechStore Pro. Todos los derechos reservados.</small>
+			</div>
+			<div class="col-md-6 text-center text-md-end mt-3 mt-md-0">
+				<ul class="list-inline mb-0 small">
+					<li class="list-inline-item"><a href="#" class="footer-link d-inline">Privacidad</a></li>
+					<li class="list-inline-item mx-2 text-secondary">•</li>
+					<li class="list-inline-item"><a href="#" class="footer-link d-inline">Términos</a></li>
+					<li class="list-inline-item mx-2 text-secondary">•</li>
+					<li class="list-inline-item"><a href="#" class="footer-link d-inline">Accesibilidad</a></li>
+				</ul>
+			</div>
 		</div>
 	</div>
 </footer>
