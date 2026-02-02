@@ -1,0 +1,21 @@
+/* src/app/views/contacto/contacto.css */
+
+/* El contenedor del formulario */
+.card {
+  background-color: var(--bg-card);
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  transition: background-color 0.3s ease;
+}
+
+h1 {
+  color: var(--text-main);
+}
+
+/* Asegurar que el botón se vea bien */
+.btn-primary {
+  background-color: var(--primary);
+  border-color: var(--primary);
+  color: white; /* Siempre blanco el texto del botón */
+}

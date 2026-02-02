@@ -1,5 +1,51 @@
-.product-thumb {
-	width: 40px;
-	height: 40px;
-	object-fit: cover;
+/* src/app/views/admin-panel/admin-panel.css */
+
+/* Contenedores principales */
+.card {
+  background-color: var(--bg-card);
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
+}
+
+/* Encabezados de sección */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-main);
+}
+
+/* Tablas */
+.table {
+  color: var(--text-main);
+  border-color: var(--border-color);
+}
+
+/* Cabecera de tabla adaptativa */
+.table-light, 
+.table-light th {
+  background-color: var(--bg-body) !important;
+  color: var(--text-main) !important;
+  border-color: var(--border-color);
+}
+
+/* Filas al pasar el mouse */
+.table-hover tbody tr:hover {
+  color: var(--text-main);
+  background-color: rgba(13, 110, 253, 0.05);
+}
+
+:host-context(body.dark-theme) .table-hover tbody tr:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Alertas y badges */
+.alert-info {
+  background-color: rgba(13, 202, 240, 0.15);
+  color: var(--text-main);
+  border-color: rgba(13, 202, 240, 0.3);
+}
+
+/* Listas de items en modo oscuro */
+.list-group-item {
+  background-color: var(--bg-card);
+  color: var(--text-main);
+  border-color: var(--border-color);
 }

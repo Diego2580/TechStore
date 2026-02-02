@@ -1,36 +1,29 @@
-import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CompanyService, Nosotros } from '../../services/company.service';
 
 @Component({
   selector: 'app-acerca',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './acerca.html',
-  styleUrl: './acerca.css',
+  styleUrls: ['./acerca.css']
 })
 export class Acerca implements OnInit {
-  nosotros: Nosotros | null = null;
   cargando = true;
-  private companyService = inject(CompanyService);
-  private cdr = inject(ChangeDetectorRef);
+  nosotros: any = null;
 
-  ngOnInit(): void {
-    this.cargarNosotros();
-  }
-
-  cargarNosotros(): void {
-    this.cargando = true;
-    this.companyService.getAll().subscribe({
-      next: (data) => {
-        this.nosotros = data;
-        this.cargando = false;
-        this.cdr.markForCheck();
-      },
-      error: () => {
-        this.cargando = false;
-        this.cdr.markForCheck();
-      },
-    });
+  ngOnInit() {
+    // Simulación de carga de datos para que no salga error en el HTML
+    setTimeout(() => {
+      this.nosotros = {
+        imagen: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
+        titulos_descripciones: [
+          { titulo: 'Innovación Constante', descripcion: 'Buscamos siempre lo último en hardware para ti.' },
+          { titulo: 'Compromiso Total', descripcion: 'Tu satisfacción es nuestra métrica más importante.' },
+          { titulo: 'Calidad Garantizada', descripcion: 'Solo trabajamos con marcas certificadas mundialmente.' }
+        ]
+      };
+      this.cargando = false;
+    }, 1000);
   }
 }

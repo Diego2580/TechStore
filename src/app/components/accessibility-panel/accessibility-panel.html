@@ -1,0 +1,163 @@
+<div class="a11y-container">
+  <div class="a11y-menu shadow-lg" [class.open]="isOpen" id="a11y-menu" role="dialog" aria-label="Panel de accesibilidad">
+    
+    <div class="a11y-header d-flex justify-content-between align-items-center p-3 border-bottom bg-light">
+      <h2 class="h6 mb-0 fw-bold"><i class="bi bi-universal-access me-2"></i>Accesibilidad</h2>
+      <button class="btn btn-link btn-sm text-decoration-none p-0 text-muted" (click)="service.resetAll()">
+        Restablecer todo
+      </button>
+    </div>
+
+    <ul class="nav nav-tabs nav-fill" id="a11yTabs" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active py-2 small fw-bold" id="visual-tab" data-bs-toggle="tab" data-bs-target="#visual-pane" type="button" role="tab" aria-selected="true">
+          <i class="bi bi-eye-fill d-block mb-1"></i>Visual
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link py-2 small fw-bold" id="advanced-tab" data-bs-toggle="tab" data-bs-target="#advanced-pane" type="button" role="tab" aria-selected="false">
+           <i class="bi bi-sliders d-block mb-1"></i>Ajustes
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link py-2 small fw-bold" id="audio-tab" data-bs-toggle="tab" data-bs-target="#audio-pane" type="button" role="tab" aria-selected="false">
+          <i class="bi bi-megaphone-fill d-block mb-1"></i>Audio
+        </button>
+      </li>
+    </ul>
+
+    <div class="tab-content a11y-content" id="a11yTabsContent">
+      
+      <div class="tab-pane fade show active p-3" id="visual-pane" role="tabpanel">
+        <div class="d-grid gap-2">
+          <button class="a11y-btn-toggle" [class.active]="s.darkMode" (click)="service.toggle('darkMode')">
+            <span><i class="bi bi-moon-stars-fill me-2"></i>Modo Oscuro</span>
+            <i class="bi bi-toggle-on fs-5 text-primary" *ngIf="s.darkMode"></i>
+            <i class="bi bi-toggle-off fs-5 text-muted" *ngIf="!s.darkMode"></i>
+          </button>
+          <button class="a11y-btn-toggle" [class.active]="s.highContrast" (click)="service.toggle('highContrast')">
+            <span><i class="bi bi-circle-half me-2"></i>Alto Contraste</span>
+            <i class="bi bi-toggle-on fs-5 text-primary" *ngIf="s.highContrast"></i>
+             <i class="bi bi-toggle-off fs-5 text-muted" *ngIf="!s.highContrast"></i>
+          </button>
+          <button class="a11y-btn-toggle" [class.active]="s.largeText" (click)="service.toggle('largeText')">
+            <span><i class="bi bi-type-h1 me-2"></i>Texto Grande</span>
+            <i class="bi bi-toggle-on fs-5 text-primary" *ngIf="s.largeText"></i>
+             <i class="bi bi-toggle-off fs-5 text-muted" *ngIf="!s.largeText"></i>
+          </button>
+           <button class="a11y-btn-toggle" [class.active]="s.reduceMotion" (click)="service.toggle('reduceMotion')">
+            <span><i class="bi bi-film me-2"></i>Reducir Movimiento</span>
+            <i class="bi bi-toggle-on fs-5 text-primary" *ngIf="s.reduceMotion"></i>
+             <i class="bi bi-toggle-off fs-5 text-muted" *ngIf="!s.reduceMotion"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="tab-pane fade p-3" id="advanced-pane" role="tabpanel">
+         <div class="d-grid gap-2 mb-4">
+            <button class="a11y-btn-toggle small-py" [class.active]="s.largeCursor" (click)="service.toggle('largeCursor')">
+              <span><i class="bi bi-cursor-fill me-2"></i>Cursor Grande</span>
+              <i class="bi bi-check-lg text-primary" *ngIf="s.largeCursor"></i>
+            </button>
+            <button class="a11y-btn-toggle small-py" [class.active]="s.underlineLinks" (click)="service.toggle('underlineLinks')">
+              <span><i class="bi bi-link-45deg me-2"></i>Subrayar Enlaces</span>
+              <i class="bi bi-check-lg text-primary" *ngIf="s.underlineLinks"></i>
+            </button>
+            <button class="a11y-btn-toggle small-py" [class.active]="s.readingGuide" (click)="service.toggle('readingGuide')">
+              <span><i class="bi bi-distribute-vertical me-2"></i>Guía de Lectura</span>
+              <i class="bi bi-check-lg text-primary" *ngIf="s.readingGuide"></i>
+            </button>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label small fw-bold d-flex justify-content-between">
+            <span><i class="bi bi-palette me-1"></i>Saturación (Color/Gris)</span>
+            <span>{{s.saturation * 100 | number:'1.0-0'}}%</span>
+          </label>
+          <input type="range" class="form-range" min="0" max="1" step="0.1" [value]="s.saturation" (input)="onSaturationChange($event)">
+        </div>
+
+        <div class="mb-3">
+           <label class="form-label small fw-bold d-flex justify-content-between">
+             <span><i class="bi bi-text-indent-left me-1"></i>Espaciado Letras</span>
+             <span>+{{s.letterSpacing}}px</span>
+           </label>
+           <input type="range" class="form-range" min="0" max="5" step="0.5" [value]="s.letterSpacing" (input)="onLetterSpacingChange($event)">
+        </div>
+         <div class="mb-3">
+           <label class="form-label small fw-bold d-flex justify-content-between">
+             <span><i class="bi bi-text-paragraph me-1"></i>Espaciado Palabras</span>
+             <span>+{{s.wordSpacing}}px</span>
+           </label>
+           <input type="range" class="form-range" min="0" max="10" step="1" [value]="s.wordSpacing" (input)="onWordSpacingChange($event)">
+        </div>
+         <div class="mb-0">
+           <label class="form-label small fw-bold d-flex justify-content-between">
+             <span><i class="bi bi-arrows-expand me-1"></i>Altura de Línea</span>
+             <span>{{s.lineHeight}}x</span>
+           </label>
+           <input type="range" class="form-range" min="1.2" max="2.5" step="0.1" [value]="s.lineHeight" (input)="onLineHeightChange($event)">
+        </div>
+      </div>
+
+      <div class="tab-pane fade p-3" id="audio-pane" role="tabpanel">
+        
+        <div class="form-check form-switch mb-4 p-3 bg-light rounded border">
+          <input class="form-check-input" type="checkbox" role="switch" id="ttsSwitch" [checked]="s.ttsEnabled" (change)="service.toggle('ttsEnabled')">
+          <label class="form-check-label fw-bold" for="ttsSwitch">Activar Lectura de Voz</label>
+          <p class="small text-muted mb-0 mt-1">Selecciona texto en la página para ver el botón de lectura.</p>
+        </div>
+
+        <div class="d-flex justify-content-center gap-2 mb-4" *ngIf="s.ttsEnabled">
+            <button class="btn btn-outline-primary flex-fill" (click)="service.speakPage()" [disabled]="service.isSpeaking()">
+              <i class="bi bi-file-earmark-play me-1"></i>Leer Página
+            </button>
+
+            @if(service.isSpeaking()) {
+                 @if(!service.isPaused()) {
+                   <button class="btn btn-warning flex-fill" (click)="service.pauseSpeaking()">
+                     <i class="bi bi-pause-fill"></i> Pausar
+                   </button>
+                 } @else {
+                    <button class="btn btn-success flex-fill" (click)="service.resumeSpeaking()">
+                     <i class="bi bi-play-fill"></i> Continuar
+                   </button>
+                 }
+                <button class="btn btn-danger flex-fill" (click)="service.stopSpeaking()">
+                  <i class="bi bi-stop-fill"></i> Detener
+                </button>
+            }
+        </div>
+
+        <div *ngIf="s.ttsEnabled" class="opacity-100 transition-opacity" [class.opacity-50]="!s.ttsEnabled">
+           <div class="mb-3">
+            <label class="form-label small fw-bold">Velocidad: {{s.ttsSpeed}}x</label>
+            <input type="range" class="form-range" min="0.5" max="2" step="0.25" [value]="s.ttsSpeed" (input)="onTtsSpeedChange($event)" [disabled]="!s.ttsEnabled">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label small fw-bold">Voz:</label>
+            <select class="form-select form-select-sm" [value]="s.ttsVoiceIndex" (change)="onVoiceChange($event)" [disabled]="!s.ttsEnabled || service.availableVoices().length === 0">
+              @for (voice of service.availableVoices(); track $index) {
+                <option [value]="$index">{{ voice.name | slice:0:25 }}{{voice.name.length > 25 ? '...' : ''}} ({{voice.lang}})</option>
+              }
+              @empty {
+                <option disabled>Cargando voces...</option>
+              }
+            </select>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <button class="btn btn-primary btn-float shadow-lg" 
+          (click)="togglePanel()" 
+          [attr.aria-expanded]="isOpen"
+          aria-label="Abrir panel de accesibilidad">
+    <i class="bi bi-universal-access-circle fs-2" *ngIf="!isOpen"></i>
+    <i class="bi bi-x-lg fs-3" *ngIf="isOpen"></i>
+  </button>
+
+</div>

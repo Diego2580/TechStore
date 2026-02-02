@@ -1,0 +1,65 @@
+.a11y-container {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 1050;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.btn-float {
+  width: 60px; height: 60px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border: 3px solid white;
+}
+.btn-float:hover { transform: scale(1.1); }
+
+.a11y-menu {
+  background-color: var(--bg-card);
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
+  width: 350px; /* Más ancho para las pestañas */
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  overflow: hidden;
+  transform-origin: bottom right;
+  transform: scale(0); opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  visibility: hidden;
+}
+.a11y-menu.open { transform: scale(1); opacity: 1; visibility: visible; }
+
+/* Estilos de Pestañas */
+.nav-tabs .nav-link {
+  color: var(--text-muted);
+  border: none;
+  border-bottom: 3px solid transparent;
+  background: var(--bg-body);
+}
+.nav-tabs .nav-link.active {
+  color: var(--primary);
+  border-bottom-color: var(--primary);
+  background: var(--bg-card);
+}
+.a11y-content {
+  max-height: 60vh; overflow-y: auto;
+}
+
+/* Botones Toggle Personalizados */
+.a11y-btn-toggle {
+  display: flex; justify-content: space-between; align-items: center;
+  width: 100%; padding: 0.75rem 1rem;
+  background: var(--bg-card); border: 1px solid var(--border-color);
+  border-radius: 8px; color: var(--text-main);
+  text-align: left; transition: all 0.2s;
+}
+.a11y-btn-toggle:hover { background-color: var(--bg-body); border-color: var(--primary); }
+.a11y-btn-toggle.active { background-color: rgba(13, 110, 253, 0.1); border-color: var(--primary); color: var(--primary); font-weight: 600; }
+.a11y-btn-toggle.small-py { padding-block: 0.5rem; font-size: 0.9rem; }
+
+/* Sliders y Forms */
+.form-range::-webkit-slider-thumb { background: var(--primary); }
+.form-switch .form-check-input:checked { background-color: var(--primary); border-color: var(--primary); }

@@ -1,52 +1,143 @@
-<div class="bg-light">
-	<section class="bg-primary text-white text-center py-5 shadow-sm hero-banner" role="banner" aria-label="Hero principal">
-		<div class="container py-4">
-			<h1 class="display-4 fw-bold text-uppercase">TechStore Pro</h1>
-			<p class="lead fs-4 mb-0">Tu socio confiable en tecnología de vanguardia</p>
-		</div>
-	</section>
+<app-animated-background variant="hero" [showRobot]="true"></app-animated-background>
 
-	<section class="container my-5 text-center" role="region" aria-labelledby="features-heading">
-		<h2 id="features-heading" class="visually-hidden">Características destacadas</h2>
-		<div class="row g-3">
-			@for (item of [
-				{ icon: 'bi-truck', title: 'Envío Rápido', text: 'Entregas en 24-48 horas' },
-				{ icon: 'bi-shield-check', title: 'Garantía Oficial', text: 'Productos 100% originales' },
-				{ icon: 'bi-headset', title: 'Soporte Técnico', text: 'Asesoría especializada' },
-				{ icon: 'bi-credit-card', title: 'Pago Seguro', text: 'Múltiples métodos de pago' }
-			]; track item.title) {
-				<div class="col-md-3">
-					<div class="card h-100 border-0 shadow-sm p-3 card-hover">
-						<i class="bi {{item.icon}} fs-1 text-primary mb-2"></i>
-						<h6 class="fw-bold">{{item.title}}</h6>
-						<p class="small text-muted mb-0">{{item.text}}</p>
-					</div>
-				</div>
-			}
-		</div>
-	</section>
+<section class="hero-section" aria-labelledby="hero-title">
+  <div class="container position-relative">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-6">
+        <span class="badge bg-primary bg-opacity-75 text-white mb-3 px-3 py-2 rounded-pill fw-bold border border-light shadow">
+          <i class="bi bi-stars me-1"></i> Tu socio en tecnología
+        </span>
+        
+        <h1 id="hero-title" class="display-3 fw-bolder mb-4 lh-tight">
+          Tecnología de <br>
+          <span class="text-warning text-shadow-lg">Vanguardia</span> <br>
+          para tu Negocio
+        </h1>
+        
+        <p class="lead mb-4 fw-medium text-white opacity-100" style="max-width: 550px; text-shadow: 0 2px 4px black;">
+          Descubre nuestra selección premium de componentes y equipos tecnológicos. Calidad garantizada en cada producto.
+        </p>
+        
+        <div class="d-flex gap-3 flex-wrap">
+          <a href="#productos" class="btn btn-primary btn-lg px-4 fw-bold shadow-lg border-light">
+            Ver Productos <i class="bi bi-arrow-right ms-2"></i>
+          </a>
+          <a routerLink="/contacto" class="btn btn-outline-light btn-lg px-4 fw-bold backdrop-blur">
+            Contactar
+          </a>
+        </div>
+        
+        <div class="pt-5 mt-4 border-top border-light border-opacity-25">
+             <p class="small text-white mb-3 fw-bold text-uppercase tracking-wider">Confían en nosotros</p>
+             <div class="d-flex gap-4 opacity-75">
+                 <span class="fw-bold text-white fs-5">Intel</span>
+                 <span class="fw-bold text-white fs-5">AMD</span>
+                 <span class="fw-bold text-white fs-5">NVIDIA</span>
+                 <span class="fw-bold text-white fs-5">Microsoft</span>
+             </div>
+         </div>
 
-	<section class="container pb-5" id="productos" role="region" aria-labelledby="productos-heading">
-		<h2 id="productos-heading" class="mb-4 fw-bold text-dark border-bottom pb-2">Catálogo de Productos</h2>
-		@if (cargando) {
-			<div class="text-center text-muted" role="status" aria-live="polite">Cargando productos...</div>
-		} @else {
-			<div class="row g-4">
-				@for (p of productos; track p.id) {
-					<div class="col-md-3">
-						<article class="card h-100 shadow-sm border-0">
-							<img [src]="p.imagen || 'https://via.placeholder.com/300'" class="card-img-top product-image" [alt]="'Imagen del producto ' + p.nombre" />
-							<div class="card-body">
-								<h3 class="fw-bold mb-1 h6">{{p.nombre}}</h3>
-								<p class="text-primary fw-bold mb-0 fs-5" aria-label="Precio: {{p.precio}} dólares">${{p.precio}}</p>
-							</div>
-						</article>
-					</div>
-				}
-				@if (productos.length === 0) {
-					<div class="text-muted">No hay productos disponibles.</div>
-				}
-			</div>
-		}
-	</section>
-</div>
+      </div>
+
+      <div class="col-lg-6 d-none d-lg-block">
+         <div class="card border-0 shadow-lg p-5 rounded-5 hero-card-glass" style="transform: rotate(-2deg);">
+            <h2 class="text-center h3 fw-bold mb-4">Nuestros Números</h2>
+            <div class="row g-4 text-center">
+                <div class="col-6">
+                    <div class="p-3 rounded-4 bg-white bg-opacity-10 border border-white border-opacity-25">
+                       <div class="display-4 fw-bold text-warning mb-0">10K+</div>
+                       <small class="text-uppercase fw-bold text-white">Clientes</small>
+                    </div>
+                </div>
+                <div class="col-6">
+                     <div class="p-3 rounded-4 bg-white bg-opacity-10 border border-white border-opacity-25">
+                       <div class="display-4 fw-bold text-info mb-0">500+</div>
+                       <small class="text-uppercase fw-bold text-white">Productos</small>
+                    </div>
+                </div>
+                 <div class="col-6">
+                     <div class="p-3 rounded-4 bg-white bg-opacity-10 border border-white border-opacity-25">
+                       <div class="display-4 fw-bold text-success mb-0">15+</div>
+                       <small class="text-uppercase fw-bold text-white">Años Exp.</small>
+                    </div>
+                </div>
+                 <div class="col-6">
+                     <div class="p-3 rounded-4 bg-white bg-opacity-10 border border-white border-opacity-25">
+                       <div class="display-4 fw-bold text-primary mb-0">4.9</div>
+                       <small class="text-uppercase fw-bold text-white"><i class="bi bi-star-fill text-warning me-1"></i>Rating</small>
+                    </div>
+                </div>
+            </div>
+         </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="py-5 position-relative z-10" aria-label="Nuestras ventajas">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-md-4">
+        <article class="advantage-card">
+          <div class="advantage-icon text-primary">
+            <i class="bi bi-shield-check-fill"></i>
+          </div>
+          <h3 class="h5 fw-bold text-main">Garantía Total</h3>
+          <p class="small mb-0 text-muted">Todos nuestros productos con garantía extendida.</p>
+        </article>
+      </div>
+      <div class="col-md-4">
+        <article class="advantage-card">
+          <div class="advantage-icon text-warning">
+            <i class="bi bi-truck"></i>
+          </div>
+          <h3 class="h5 fw-bold text-main">Envío Rápido</h3>
+          <p class="small mb-0 text-muted">Entrega en 24-48 horas a todo el país.</p>
+        </article>
+      </div>
+      <div class="col-md-4">
+        <article class="advantage-card">
+          <div class="advantage-icon text-success">
+            <i class="bi bi-headset"></i>
+          </div>
+          <h3 class="h5 fw-bold text-main">Soporte 24/7</h3>
+          <p class="small mb-0 text-muted">Atención al cliente todos los días.</p>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="container py-5 position-relative z-10" id="productos">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h2 class="fw-bold mb-0 text-white text-shadow">Catálogo Destacado</h2>
+      <a routerLink="/servicios" class="btn btn-outline-light btn-sm rounded-pill px-3 backdrop-blur">Ver Todo</a>
+    </div>
+    
+    @if (cargando) {
+      <div class="text-center py-5">
+        <div class="spinner-border text-light" role="status"></div>
+        <p class="mt-2 text-white">Cargando inventario...</p>
+      </div>
+    } @else {
+      <div class="row g-4">
+        @for (p of productos; track p.id) {
+          <div class="col-md-6 col-lg-3">
+            <article class="product-card h-100 shadow-sm">
+              <div class="product-image-container">
+                 <img [src]="p.imagen || 'assets/placeholder.jpg'" class="img-fluid d-block mx-auto" style="max-height: 180px;" [alt]="'Imagen de ' + p.nombre" />
+              </div>
+              <div class="card-body d-flex flex-column">
+                <h3 class="h6 fw-bold mb-2">{{p.nombre}}</h3>
+                <p class="small mb-3 flex-grow-1">{{p.descripcion}}</p>
+                <div class="d-flex justify-content-between align-items-center mt-3 pt-3 border-top">
+                   <span class="fs-5 fw-bold text-primary">${{p.precio}}</span>
+                   <button class="btn btn-primary btn-sm rounded-circle p-2"><i class="bi bi-cart-plus-fill"></i></button>
+                </div>
+              </div>
+            </article>
+          </div>
+        }
+      </div>
+    }
+</section>

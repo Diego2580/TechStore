@@ -1,0 +1,59 @@
+/* src/app/views/servicios/servicios.css */
+.service-card {
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 2rem;
+  transition: all 0.3s ease;
+  /* CORRECCIÓN: Usar variable en lugar de white */
+  background-color: var(--bg-card);
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.service-card:hover {
+  border-color: var(--primary);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  transform: translateY(-5px);
+}
+
+.icon-box {
+  width: 60px;
+  height: 60px;
+  background-color: rgba(13, 110, 253, 0.1);
+  color: var(--primary);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.75rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Ajuste de color del icono en modo oscuro */
+:host-context(body.dark-theme) .icon-box {
+  background-color: rgba(61, 139, 253, 0.2);
+  color: #6ea8fe;
+}
+
+.badge-tag {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background-color: var(--secondary);
+  color: #000; /* Texto negro siempre en el badge dorado para contraste */
+  padding: 4px 8px;
+  border-radius: 4px;
+  float: right;
+  font-weight: 800;
+  opacity: 0.8;
+}
+
+h3 {
+  color: var(--text-main);
+}
+
+p {
+  color: var(--text-muted);
+}
