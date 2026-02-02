@@ -2,21 +2,21 @@
   
   <section class="mb-5 fade-in">
     <div class="text-center mb-5">
-      <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill mb-3">Nuestra Historia</span>
-      <h1 class="display-4 fw-bold mb-3">Innovando desde el Corazón de Cuenca</h1>
-      <p class="lead text-muted mx-auto" style="max-width: 800px;">
+      <span class="badge bg-primary bg-opacity-10 text-light px-3 py-2 rounded-pill mb-3">Nuestra Historia</span>
+      <h1 class="display-4 fw-bold mb-3 text-light">Innovando desde el Corazón de Cuenca</h1>
+      <p class="lead text-light mx-auto opacity-75" style="max-width: 800px;">
         Conoce cómo pasamos de ser un pequeño proyecto universitario a convertirnos en el referente tecnológico del Austro ecuatoriano.
       </p>
     </div>
 
     <div class="row align-items-center g-5 mb-5">
       <div class="col-lg-6">
-        <div class="p-4 bg-card rounded-4 border shadow-sm h-100">
-          <h2 class="h4 fw-bold text-primary mb-4">¿Quiénes Somos?</h2>
-          <p class="text-muted mb-3">
+        <div class="p-4 bg-secondary rounded-4 border border-light shadow-sm h-100">
+          <h2 class="h4 fw-bold text-light mb-4">¿Quiénes Somos?</h2>
+          <p class="text-light mb-3 opacity-85">
             TechStore Pro nació en 2024 como una respuesta a la creciente demanda de componentes de alto rendimiento en Ecuador. Fundada por un grupo de entusiastas del hardware y desarrolladores de software, nuestra misión siempre ha sido clara: <strong>democratizar el acceso a la tecnología de punta.</strong>
           </p>
-          <p class="text-muted">
+          <p class="text-light opacity-85">
             Entendemos que una computadora no es solo una máquina; es la herramienta con la que se construye el futuro. Ya seas un arquitecto renderizando planos, un desarrollador compilando código complejo o un gamer buscando la máxima tasa de cuadros, estamos aquí para asegurarnos de que tu hardware nunca sea un límite.
           </p>
         </div>
@@ -24,15 +24,15 @@
       <div class="col-lg-6">
         <div class="row g-3">
           <div class="col-6">
-            <div class="p-3 bg-light rounded-3 text-center border h-100 d-flex flex-column justify-content-center">
-              <div class="display-4 fw-bold text-primary mb-0">2024</div>
-              <small class="text-muted fw-bold text-uppercase">Año de Fundación</small>
+            <div class="p-3 bg-secondary rounded-3 text-center border border-light h-100 d-flex flex-column justify-content-center">
+              <div class="display-4 fw-bold text-light mb-0">2024</div>
+              <small class="text-light fw-bold text-uppercase opacity-75">Año de Fundación</small>
             </div>
           </div>
           <div class="col-6">
-            <div class="p-3 bg-light rounded-3 text-center border h-100 d-flex flex-column justify-content-center">
-              <div class="display-4 fw-bold text-secondary mb-0">Cuenca</div>
-              <small class="text-muted fw-bold text-uppercase">Sede Principal</small>
+            <div class="p-3 bg-secondary rounded-3 text-center border border-light h-100 d-flex flex-column justify-content-center">
+              <div class="display-4 fw-bold text-light mb-0">Cuenca</div>
+              <small class="text-light fw-bold text-uppercase opacity-75">Sede Principal</small>
             </div>
           </div>
           <div class="col-12">
@@ -52,7 +52,7 @@
         <div class="spinner-border text-primary" role="status">
           <span class="visually-hidden">Cargando información...</span>
         </div>
-        <p class="text-muted mt-3">Sincronizando con nuestros servidores...</p>
+        <p class="text-light mt-3 opacity-75">Sincronizando con nuestros servidores...</p>
       </div>
     } @else if (nosotros) {
       <article class="fade-in">
@@ -66,12 +66,12 @@
           </div>
           <div class="col-md-6">
             @for (item of nosotros.titulos_descripciones; track $index) {
-              <div class="mb-4 p-3 rounded-3 hover-bg">
-                <h3 class="fw-bold mb-2 text-primary d-flex align-items-center">
-                  <i class="bi bi-check-circle-fill me-2 fs-5"></i>
+              <div class="mb-4 p-3 rounded-3 bg-secondary border border-light">
+                <h3 class="fw-bold mb-2 text-light d-flex align-items-center">
+                  <i class="bi bi-check-circle-fill me-2 fs-5 text-primary"></i>
                   {{ item.titulo }}
                 </h3>
-                <p class="text-muted mb-0 ps-4 border-start border-2 border-secondary ms-2">
+                <p class="text-light mb-0 ps-4 border-start border-2 border-primary ms-2 opacity-85">
                   {{ item.descripcion }}
                 </p>
               </div>
@@ -80,11 +80,11 @@
         </div>
       </article>
     } @else {
-      <div class="alert alert-light border shadow-sm d-flex align-items-center p-4 rounded-4" role="alert">
-        <i class="bi bi-info-circle-fill text-primary fs-3 me-3"></i>
+      <div class="alert alert-secondary border border-light shadow-sm d-flex align-items-center p-4 rounded-4" role="alert">
+        <i class="bi bi-info-circle-fill text-light fs-3 me-3"></i>
         <div>
-          <h4 class="alert-heading h6 fw-bold mb-1">Actualización en curso</h4>
-          <p class="mb-0 text-muted small">Estamos actualizando nuestros valores corporativos dinámicos. La historia de arriba sigue vigente.</p>
+          <h4 class="alert-heading h6 fw-bold mb-1 text-light">Actualización en curso</h4>
+          <p class="mb-0 text-light small opacity-75">Estamos actualizando nuestros valores corporativos dinámicos. La historia de arriba sigue vigente.</p>
         </div>
       </div>
     }
