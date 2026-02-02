@@ -7,43 +7,121 @@
       <p class="lead text-light mx-auto opacity-75" style="max-width: 800px;">
         Conoce cómo pasamos de ser un pequeño proyecto universitario a convertirnos en el referente tecnológico del Austro ecuatoriano.
       </p>
+      
+      <!-- Botón de editar solo para admin -->
+      @if (authService.isAuthenticated() && !editando) {
+        <div class="mt-3">
+          <button type="button" class="btn btn-warning btn-sm" (click)="iniciarEdicion()">
+            ✏️ Editar Información
+          </button>
+        </div>
+      }
     </div>
 
-    <div class="row align-items-center g-5 mb-5">
-      <div class="col-lg-6">
-        <div class="p-4 bg-secondary rounded-4 border border-light shadow-sm h-100">
-          <h2 class="h4 fw-bold text-light mb-4">¿Quiénes Somos?</h2>
-          <p class="text-light mb-3 opacity-85">
-            TechStore Pro nació en 2024 como una respuesta a la creciente demanda de componentes de alto rendimiento en Ecuador. Fundada por un grupo de entusiastas del hardware y desarrolladores de software, nuestra misión siempre ha sido clara: <strong>democratizar el acceso a la tecnología de punta.</strong>
-          </p>
-          <p class="text-light opacity-85">
-            Entendemos que una computadora no es solo una máquina; es la herramienta con la que se construye el futuro. Ya seas un arquitecto renderizando planos, un desarrollador compilando código complejo o un gamer buscando la máxima tasa de cuadros, estamos aquí para asegurarnos de que tu hardware nunca sea un límite.
-          </p>
-        </div>
-      </div>
-      <div class="col-lg-6">
-        <div class="row g-3">
-          <div class="col-6">
-            <div class="p-3 bg-secondary rounded-3 text-center border border-light h-100 d-flex flex-column justify-content-center">
-              <div class="display-4 fw-bold text-light mb-0">2024</div>
-              <small class="text-light fw-bold text-uppercase opacity-75">Año de Fundación</small>
-            </div>
-          </div>
-          <div class="col-6">
-            <div class="p-3 bg-secondary rounded-3 text-center border border-light h-100 d-flex flex-column justify-content-center">
-              <div class="display-4 fw-bold text-light mb-0">Cuenca</div>
-              <small class="text-light fw-bold text-uppercase opacity-75">Sede Principal</small>
-            </div>
-          </div>
-          <div class="col-12">
-            <div class="p-4 bg-primary text-white rounded-3 text-center shadow-sm">
-              <i class="bi bi-quote fs-1 opacity-50"></i>
-              <p class="fs-5 fst-italic mb-0">"La tecnología es mejor cuando une a las personas."</p>
-            </div>
+    @if (!editando) {
+      <!-- VISTA NORMAL -->
+      <div class="row align-items-center g-5 mb-5">
+        <div class="col-lg-6">
+          <div class="p-4 bg-secondary rounded-4 border border-light shadow-sm h-100">
+            <h2 class="h4 fw-bold text-light mb-4">¿Quiénes Somos?</h2>
+            <p class="text-light mb-3 opacity-85">
+              TechStore Pro nació en 2024 como una respuesta a la creciente demanda de componentes de alto rendimiento en Ecuador. Fundada por un grupo de entusiastas del hardware y desarrolladores de software, nuestra misión siempre ha sido clara: <strong>democratizar el acceso a la tecnología de punta.</strong>
+            </p>
+            <p class="text-light opacity-85">
+              Entendemos que una computadora no es solo una máquina; es la herramienta con la que se construye el futuro. Ya seas un arquitecto renderizando planos, un desarrollador compilando código complejo o un gamer buscando la máxima tasa de cuadros, estamos aquí para asegurarnos de que tu hardware nunca sea un límite.
+            </p>
           </div>
         </div>
+        <div class="col-lg-6">
+          <div class="row g-3">
+            <div class="col-6">
+              <div class="p-3 bg-secondary rounded-3 text-center border border-light h-100 d-flex flex-column justify-content-center">
+                <div class="display-4 fw-bold text-light mb-0">2024</div>
+                <small class="text-light fw-bold text-uppercase opacity-75">Año de Fundación</small>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="p-3 bg-secondary rounded-3 text-center border border-light h-100 d-flex flex-column justify-content-center">
+                <div class="display-4 fw-bold text-light mb-0">Cuenca</div>
+                <small class="text-light fw-bold text-uppercase opacity-75">Sede Principal</small>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="p-4 bg-primary text-white rounded-3 text-center shadow-sm">
+                <i class="bi bi-quote fs-1 opacity-50"></i>
+                <p class="fs-5 fst-italic mb-0">"La tecnología es mejor cuando une a las personas."</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
+    } @else {
+      <!-- FORMULARIO DE EDICIÓN -->
+      <form (ngSubmit)="guardarNosotros()" class="card bg-light p-4 mb-4">
+        <h4 class="mb-3 text-primary">✏️ Editar Información de la Empresa</h4>
+        
+        <div class="mb-3">
+          <label for="imagen-url" class="form-label fw-bold">URL de Imagen</label>
+          <input id="imagen-url" type="text" class="form-control" placeholder="https://..." [(ngModel)]="formularioNosotros.imagen" name="imagen" />
+        </div>
+
+        <div class="mb-3">
+          <label for="imagen-file" class="form-label fw-bold">O Cargar Imagen</label>
+          <input id="imagen-file" type="file" class="form-control" accept="image/*" (change)="onImageSelected($event)" />
+          <small class="text-muted">Máx. 5MB</small>
+        </div>
+
+        @if (formularioNosotros.imagen) {
+          <div class="mb-3">
+            <small class="text-muted"><strong>Previsualización:</strong></small>
+            <img [src]="formularioNosotros.imagen" 
+                 style="max-height: 150px; border-radius: 5px; margin-top: 8px;" 
+                 alt="Preview" 
+                 onerror="this.style.display='none'" 
+                 class="img-thumbnail" />
+          </div>
+        }
+
+        <hr />
+
+        <h5 class="mb-3">Títulos y Descripciones</h5>
+
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <input type="text" class="form-control" placeholder="Título" [(ngModel)]="formularioNosotros.titulo_temp" name="titulo_temp" />
+          </div>
+          <div class="col-md-6">
+            <textarea class="form-control" placeholder="Descripción" [(ngModel)]="formularioNosotros.descripcion_temp" name="descripcion_temp" rows="2"></textarea>
+          </div>
+        </div>
+
+        <button type="button" class="btn btn-info btn-sm mb-3" (click)="agregarTituloDescripcion()">
+          ➕ Agregar
+        </button>
+
+        @if (nosotros?.titulos_descripciones && nosotros.titulos_descripciones.length > 0) {
+          <div class="list-group mb-3">
+            @for (item of nosotros.titulos_descripciones; track $index) {
+              <div class="list-group-item d-flex justify-content-between align-items-start">
+                <div>
+                  <h6 class="mb-1">{{ item.titulo }}</h6>
+                  <p class="mb-0 small text-muted">{{ item.descripcion.substring(0, 80) }}...</p>
+                </div>
+                <div class="btn-group btn-group-sm">
+                  <button type="button" class="btn btn-outline-primary" (click)="prepararEdicionTituloDescripcion($index)">✏️</button>
+                  <button type="button" class="btn btn-outline-danger" (click)="eliminarTituloDescripcion($index)">🗑️</button>
+                </div>
+              </div>
+            }
+          </div>
+        }
+
+        <div class="d-flex gap-2">
+          <button type="submit" class="btn btn-success flex-grow-1">💾 Guardar</button>
+          <button type="button" class="btn btn-outline-secondary flex-grow-1" (click)="cancelarEdicion()">❌ Cancelar</button>
+        </div>
+      </form>
+    }
   </section>
 
   <section aria-label="Información adicional de la empresa">
@@ -67,9 +145,17 @@
           <div class="col-md-6">
             @for (item of nosotros.titulos_descripciones; track $index) {
               <div class="mb-4 p-3 rounded-3 bg-secondary border border-light">
-                <h3 class="fw-bold mb-2 text-light d-flex align-items-center">
-                  <i class="bi bi-check-circle-fill me-2 fs-5 text-primary"></i>
-                  {{ item.titulo }}
+                <h3 class="fw-bold mb-2 text-light d-flex align-items-center justify-content-between">
+                  <span>
+                    <i class="bi bi-check-circle-fill me-2 fs-5 text-primary"></i>
+                    {{ item.titulo }}
+                  </span>
+                  @if (authService.isAuthenticated() && editando) {
+                    <div class="btn-group btn-group-sm">
+                      <button type="button" class="btn btn-outline-primary" (click)="prepararEdicionTituloDescripcion($index)">✏️</button>
+                      <button type="button" class="btn btn-outline-danger" (click)="eliminarTituloDescripcion($index)">🗑️</button>
+                    </div>
+                  }
                 </h3>
                 <p class="text-light mb-0 ps-4 border-start border-2 border-primary ms-2 opacity-85">
                   {{ item.descripcion }}

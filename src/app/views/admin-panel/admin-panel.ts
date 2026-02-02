@@ -298,4 +298,34 @@ export class AdminPanel implements OnInit {
       descripcion_temp: ''
     };
   }
+
+  // Método para manejar la carga de imágenes
+  onImageSelected(event: any, tipo: string): void {
+    const file: File = event.target.files[0];
+    
+    if (!file) return;
+    
+    // Validar tamaño (máx 5MB)
+    const maxSize = 5 * 1024 * 1024;
+    if (file.size > maxSize) {
+      alert('La imagen es demasiado grande. Máximo 5MB');
+      return;
+    }
+    
+    // Validar tipo
+    if (!file.type.startsWith('image/')) {
+      alert('Por favor selecciona un archivo de imagen válido');
+      return;
+    }
+    
+    // Leer la imagen y convertirla a base64 o URL
+    const reader = new FileReader();
+    reader.onload = (e: any) => {
+      if (tipo === 'nosotros') {
+        this.formularioNosotros.imagen = e.target.result;
+      }
+      this.cdr.markForCheck();
+    };
+    reader.readAsDataURL(file);
+  }
 }

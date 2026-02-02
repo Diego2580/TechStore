@@ -31,13 +31,28 @@
 		} @else if (editandoNosotros && nosotros) {
 			<!-- FORMULARIO DE EDICIÓN -->
 			<form (ngSubmit)="guardarNosotros()" class="mt-3">
-				<div class="mb-3">
-					<label for="imagen-nosotros" class="form-label fw-bold">URL de Imagen (Una sola para toda la sección)</label>
-					<input id="imagen-nosotros" type="text" class="form-control" placeholder="https://..." [(ngModel)]="formularioNosotros.imagen" name="imagen" required aria-required="true" />
+				<div class="card bg-light p-3 mb-3">
+					<h5 class="card-title fw-bold mb-3">🖼️ Imagen Principal</h5>
+					
+					<div class="mb-3">
+						<label for="imagen-nosotros-url" class="form-label fw-bold">URL de Imagen</label>
+						<input id="imagen-nosotros-url" type="text" class="form-control" placeholder="https://..." [(ngModel)]="formularioNosotros.imagen" name="imagen" aria-label="URL de imagen" />
+					</div>
+
+					<div class="mb-3">
+						<label for="imagen-nosotros-file" class="form-label fw-bold">O Cargar Imagen</label>
+						<input id="imagen-nosotros-file" type="file" class="form-control" accept="image/*" (change)="onImageSelected($event, 'nosotros')" aria-label="Cargar imagen" />
+						<small class="text-muted d-block mt-2">Formatos: JPG, PNG, GIF (máx. 5MB)</small>
+					</div>
+
 					@if (formularioNosotros.imagen) {
-						<div class="mt-2">
-							<small class="text-muted">Previsualización:</small>
-							<img [src]="formularioNosotros.imagen" style="max-height: 150px; border-radius: 5px; margin-top: 5px;" alt="Preview" onerror="this.style.display='none'" />
+						<div class="mt-3">
+							<small class="text-muted d-block mb-2"><strong>Previsualización:</strong></small>
+							<img [src]="formularioNosotros.imagen" 
+								 style="max-height: 200px; border-radius: 5px; margin-top: 5px; border: 2px solid #ccc;" 
+								 alt="Preview" 
+								 onerror="this.style.display='none'" 
+								 class="img-thumbnail" />
 						</div>
 					}
 				</div>

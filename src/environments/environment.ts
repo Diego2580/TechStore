@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  backendBaseUrl: 'https://tech-store-backend.onrender.com'
+  backendBaseUrl: 'https://techstore-hs0k.onrender.com'
 };
