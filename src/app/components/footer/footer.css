@@ -1,3 +1,89 @@
-footer {
-  margin-top: auto;
+/* src/app/components/footer/footer.css */
+
+.footer-dark {
+  /* Fondo SÓLIDO para tapar las estrellas en movimiento */
+  background-color: #050505 !important; 
+  
+  /* Asegura que el footer esté POR ENCIMA del fondo de estrellas */
+  position: relative;
+  z-index: 10;
+  
+  color: #f8f9fa;
+  font-size: 0.9rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1); /* Borde sutil */
+  transition: background-color 0.3s ease;
+}
+
+.footer-title {
+  color: var(--primary);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  margin-bottom: 1.2rem;
+  letter-spacing: 1px;
+}
+
+/* Texto descriptivo: Gris claro para buen contraste */
+.footer-text {
+  color: #adb5bd !important;
+  line-height: 1.6;
+}
+
+/* Enlaces */
+.footer-link {
+  color: #adb5bd !important;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.footer-link:hover {
+  color: var(--secondary) !important; /* Dorado al pasar el mouse */
+  padding-left: 5px;
+  text-decoration: none;
+}
+
+/* Botones de Redes Sociales */
+.social-btn {
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+  color: white;
+  margin-right: 10px;
+  transition: all 0.3s;
+  border: 1px solid transparent;
+}
+
+.social-btn:hover {
+  background: var(--primary);
+  color: white;
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(13, 110, 253, 0.4);
+}
+
+/* === AJUSTES PARA ALTO CONTRASTE === */
+:host-context(body.high-contrast) .footer-dark {
+  background-color: #000000 !important;
+  border-top: 2px solid #ffffff !important;
+}
+
+:host-context(body.high-contrast) .footer-text,
+:host-context(body.high-contrast) .footer-link,
+:host-context(body.high-contrast) .social-btn {
+  color: #ffffff !important;
+  opacity: 1 !important;
+}
+
+:host-context(body.high-contrast) .social-btn {
+  border: 1px solid #ffffff;
+}
+
+:host-context(body.high-contrast) .footer-link:hover {
+  text-decoration: underline;
+  color: #ffff00 !important; 
 }

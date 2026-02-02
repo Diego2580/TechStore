@@ -1,4 +1,44 @@
+/* src/app/views/login/login.css */
+
 .login-card {
-	max-width: 400px;
-	width: 100%;
+  max-width: 400px;
+  width: 100%;
+  /* Fondo dinámico */
+  background-color: var(--bg-card);
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  /* Sombra suave */
+  box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+}
+
+/* Efecto especial en modo oscuro para que parezca profesional */
+:host-context(body.dark-theme) .login-card {
+  background-color: rgba(21, 26, 35, 0.95); /* Semitransparente */
+  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+  backdrop-filter: blur(10px);
+}
+
+h1 {
+  color: var(--text-main);
+  letter-spacing: -0.5px;
+}
+
+/* Icono de usuario y llave */
+.input-group-text {
+  background-color: var(--bg-body) !important;
+  border-color: var(--border-color) !important;
+  color: var(--text-muted) !important;
+}
+
+/* Enlaces */
+a {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+a:hover {
+  color: var(--secondary);
+  text-decoration: underline;
 }
