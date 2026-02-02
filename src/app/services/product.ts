@@ -1,9 +1,7 @@
-import { Inject, Injectable, PLATFORM_ID, inject } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { TransferState, makeStateKey } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { isPlatformBrowser } from '@angular/common';
-import { tap } from 'rxjs/operators';
+import { Observable, of, throwError } from 'rxjs';
+import { tap, catchError, shareReplay } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -11,14 +9,42 @@ import { environment } from '../../environments/environment';
 })
 export class Product {
   private http = inject(HttpClient);
-  private transferState = inject(TransferState);
-  private platformId = inject(PLATFORM_ID);
   private readonly API_URL = `${environment.backendBaseUrl}/api/productos`;
-  private readonly PRODUCTS_KEY = makeStateKey<any[]>('productos-cache');
+  private cache: any[] | null = null;
+  private cacheTimer: any = null;
+  private readonly CACHE_DURATION = 5 * 60 * 1000; // 5 minutos
+  private productCache$: Observable<any[]> | null = null;
 
   getAll(): Observable<any[]> {
-    // Siempre hacer petición HTTP fresca - el TransferState causaba problemas con cache vacío
-    return this.http.get<any[]>(this.API_URL);
+    // Si hay caché y es válido, devolverlo
+    if (this.cache !== null && this.cacheTimer) {
+      return of(this.cache);
+    }
+
+    // Si hay una petición en progreso, devolverla
+    if (this.productCache$) {
+      return this.productCache$;
+    }
+
+    // Nueva petición
+    this.productCache$ = this.http.get<any[]>(this.API_URL).pipe(
+      tap(data => {
+        this.cache = data;
+        // Limpiar caché después de CACHE_DURATION
+        if (this.cacheTimer) clearTimeout(this.cacheTimer);
+        this.cacheTimer = setTimeout(() => {
+          this.cache = null;
+          this.productCache$ = null;
+        }, this.CACHE_DURATION);
+      }),
+      catchError(err => {
+        this.productCache$ = null;
+        return throwError(() => err);
+      }),
+      shareReplay(1)
+    );
+
+    return this.productCache$;
   }
 
   /**
@@ -26,7 +52,21 @@ export class Product {
    * Siempre hace una petición HTTP real al servidor
    */
   getFresh(): Observable<any[]> {
-    return this.http.get<any[]>(this.API_URL);
+    // Limpiar caché
+    this.cache = null;
+    this.productCache$ = null;
+    if (this.cacheTimer) clearTimeout(this.cacheTimer);
+
+    return this.http.get<any[]>(this.API_URL).pipe(
+      tap(data => {
+        this.cache = data;
+        if (this.cacheTimer) clearTimeout(this.cacheTimer);
+        this.cacheTimer = setTimeout(() => {
+          this.cache = null;
+          this.productCache$ = null;
+        }, this.CACHE_DURATION);
+      })
+    );
   }
 
   create(product: any): Observable<any> {

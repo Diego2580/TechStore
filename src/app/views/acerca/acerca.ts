@@ -18,7 +18,7 @@ interface NosotrosForm {
   styleUrls: ['./acerca.css']
 })
 export class Acerca implements OnInit {
-  cargando = true;
+  cargando = false;
   nosotros: any = null;
   error: string | null = null;
   
@@ -30,19 +30,26 @@ export class Acerca implements OnInit {
     descripcion_temp: ''
   };
   editandoItemIndex: number | null = null;
+  private cargado = false;
 
   private companyService = inject(CompanyService);
   public authService = inject(AuthService);
 
   ngOnInit() {
-    this.cargarNosotros();
+    // Solo cargar si no se ha cargado antes
+    if (!this.cargado) {
+      this.cargarNosotros();
+      this.cargado = true;
+    }
   }
 
   cargarNosotros() {
+    this.cargando = true;
     this.companyService.obtenerNosotros().subscribe({
       next: (data) => {
         this.nosotros = data;
         this.cargando = false;
+        this.error = null;
       },
       error: (err) => {
         console.error('Error cargando información', err);
@@ -61,7 +68,6 @@ export class Acerca implements OnInit {
     });
   }
 
-  // Métodos de edición
   iniciarEdicion(): void {
     this.editando = true;
     this.formularioNosotros = {

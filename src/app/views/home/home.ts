@@ -12,20 +12,27 @@ import { Product } from '../../services/product';
   styleUrl: './home.css'
 })
 export class Home implements OnInit {
-  cargando = true;
+  cargando = false;
   productos: any[] = [];
   error: string | null = null;
   private productService = inject(Product);
+  private cargado = false;
 
   ngOnInit() {
-    this.cargarProductos();
+    // Solo cargar si no se ha cargado antes
+    if (!this.cargado) {
+      this.cargarProductos();
+      this.cargado = true;
+    }
   }
 
   cargarProductos() {
+    this.cargando = true;
     this.productService.getAll().subscribe({
       next: (data) => {
         this.productos = data || [];
         this.cargando = false;
+        this.error = null;
       },
       error: (err) => {
         console.error('Error cargando productos:', err);
