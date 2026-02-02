@@ -1,44 +1,62 @@
 /* src/app/views/acerca/acerca.css */
 
-/* Tarjeta principal de historia */
+/* Tarjeta principal de historia - tema oscuro */
 .bg-card {
-  background-color: var(--bg-card) !important;
-  color: var(--text-main);
+  background-color: rgba(108, 117, 125, 0.7) !important;
+  color: #f8f9fa;
+  backdrop-filter: blur(10px);
 }
 
 /* Cajas de estadísticas (años, sede) */
 .stat-box {
-  background-color: var(--bg-card);
-  border: 1px solid var(--border-color);
-  color: var(--text-main);
-  transition: transform 0.3s;
+  background-color: rgba(108, 117, 125, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #f8f9fa;
+  transition: transform 0.3s, background-color 0.3s;
 }
 
 .stat-box:hover {
-  border-color: var(--primary);
+  border-color: #0d6efd;
   transform: scale(1.02);
+  background-color: rgba(108, 117, 125, 0.7);
 }
 
 /* Cita inspiradora */
 .quote-box {
-  background-color: var(--primary);
-  color: white; /* Siempre blanco porque el fondo es azul primario */
+  background-color: #0d6efd;
+  color: white;
 }
 
-/* Lista de valores */
+/* Lista de valores - fondo oscuro */
 .hover-bg {
-  transition: background-color 0.2s;
+  background-color: rgba(108, 117, 125, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: background-color 0.2s, border-color 0.2s;
   border-radius: 8px;
 }
 
 .hover-bg:hover {
-  background-color: rgba(13, 110, 253, 0.05);
+  background-color: rgba(108, 117, 125, 0.7);
+  border-color: #0d6efd;
 }
 
-/* Ajuste para modo oscuro en hover */
-:host-context(body.dark-theme) .hover-bg:hover {
-  background-color: rgba(255, 255, 255, 0.05);
+/* Textos legibles en fondo oscuro */
+:host {
+  display: block;
 }
 
-h1, h2, h3 { color: var(--text-main); }
-p, li { color: var(--text-muted); }
+/* Animación fade-in */
+.fade-in {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

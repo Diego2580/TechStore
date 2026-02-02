@@ -26,6 +26,10 @@ export class CompanyService {
   private readonly KEY = makeStateKey<Nosotros>('nosotros-cache');
 
   // Obtener información de Nosotros
+  obtenerNosotros(): Observable<Nosotros> {
+    return this.getAll();
+  }
+
   getAll(): Observable<Nosotros> {
     // Siempre hacer petición HTTP fresca - el TransferState causaba problemas con cache vacío
     return this.http.get<Nosotros>(this.API_URL);
