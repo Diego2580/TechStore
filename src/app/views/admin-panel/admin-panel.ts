@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Product } from '../../services/product';
 import { CompanyService, Nosotros, TituloDescripcion } from '../../services/company.service';
+import { ServiciosService, Servicio } from '../../services/servicios.service';
 import { finalize } from 'rxjs/operators';
 
 interface ProductoForm {
@@ -50,13 +51,82 @@ export class AdminPanel implements OnInit {
   };
   editandoItemIndex: number | null = null;
 
+  // SERVICIOS
+  servicios: Servicio[] = [];
+  editandoServicioIndex: number | null = null;
+  editandoServicios: boolean = false;
+
+  formularioServicio: Servicio = {
+    icon: '',
+    title: '',
+    desc: '',
+    badge: ''
+  };
+
   private productService = inject(Product);
   private companyService = inject(CompanyService);
+  private serviciosService = inject(ServiciosService);
   private cdr = inject(ChangeDetectorRef);
 
   ngOnInit(): void {
     this.cargarProductos();
     this.cargarNosotros();
+    this.cargarServicios();
+  }
+
+  // ============ SERVICIOS ============
+
+  cargarServicios(): void {
+    this.serviciosService.getServicios().subscribe({
+      next: (data) => {
+        this.servicios = [...(data ?? [])];
+        this.cdr.markForCheck();
+      }
+    });
+  }
+
+  iniciarEdicionServicios(): void {
+    this.editandoServicios = true;
+    this.formularioServicio = { icon: '', title: '', desc: '', badge: '' };
+    this.editandoServicioIndex = null;
+  }
+
+  cancelarEdicionServicios(): void {
+    this.editandoServicios = false;
+    this.formularioServicio = { icon: '', title: '', desc: '', badge: '' };
+    this.editandoServicioIndex = null;
+  }
+
+  editarServicio(index: number): void {
+    this.editandoServicioIndex = index;
+    this.formularioServicio = { ...this.servicios[index] };
+    window.scrollTo(0, 0);
+  }
+
+  guardarServicio(): void {
+    if (!this.formularioServicio.title || !this.formularioServicio.desc) {
+      alert('Por favor completa título y descripción');
+      return;
+    }
+
+    const serviciosActualizados = [...this.servicios];
+    if (this.editandoServicioIndex !== null) {
+      serviciosActualizados[this.editandoServicioIndex] = this.formularioServicio;
+    } else {
+      serviciosActualizados.push(this.formularioServicio);
+    }
+
+    this.serviciosService.actualizarServicios(serviciosActualizados);
+    this.cancelarEdicionServicios();
+    this.cargarServicios();
+  }
+
+  eliminarServicio(index: number): void {
+    if (confirm('¿Eliminar este servicio?')) {
+      const serviciosActualizados = this.servicios.filter((_, i) => i !== index);
+      this.serviciosService.actualizarServicios(serviciosActualizados);
+      this.cargarServicios();
+    }
   }
 
   // ============ PRODUCTOS ============

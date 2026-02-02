@@ -203,4 +203,72 @@
 			</section>
 		</div>
 	</div>
+
+	<!-- SECCIÓN SERVICIOS -->
+	<div class="card shadow border-0 p-4 mt-5 bg-light">
+		<h2 class="h4 text-primary mb-3">⚙️ Gestionar Servicios</h2>
+		
+		@if (!editandoServicios && servicios && servicios.length > 0) {
+			<div class="alert alert-info">
+				<strong>Servicios Actuales:</strong>
+				<div class="row g-3 mt-3">
+					@for (servicio of servicios; track $index) {
+						<div class="col-md-6">
+							<div class="card border">
+								<div class="card-body">
+									<div class="d-flex align-items-start justify-content-between">
+										<div>
+											<h6 class="card-title fw-bold">{{ servicio.title }}</h6>
+											<p class="text-muted small mb-2">{{ servicio.desc }}</p>
+											@if (servicio.badge) {
+												<span class="badge bg-secondary">{{ servicio.badge }}</span>
+											}
+										</div>
+										<div class="btn-group btn-group-sm">
+											<button type="button" class="btn btn-outline-primary" (click)="editarServicio($index)">✏️</button>
+											<button type="button" class="btn btn-outline-danger" (click)="eliminarServicio($index)">🗑️</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					}
+				</div>
+			</div>
+			<button type="button" class="btn btn-warning me-2" (click)="iniciarEdicionServicios()">✏️ Editar Servicios</button>
+			<button type="button" class="btn btn-success" (click)="iniciarEdicionServicios(); formularioServicio = { icon: '', title: '', desc: '', badge: '' }">➕ Agregar Servicio</button>
+		} @else if (editandoServicios) {
+			<!-- FORMULARIO DE EDICIÓN -->
+			<form (ngSubmit)="guardarServicio()" class="mt-3 card bg-white p-4">
+				<div class="mb-3">
+					<label for="servicio-icon" class="form-label fw-bold">Ícono (Bootstrap Icons)</label>
+					<input id="servicio-icon" type="text" class="form-control" placeholder="bi-wrench" [(ngModel)]="formularioServicio.icon" name="icon" />
+					<small class="text-muted">Ej: bi-wrench, bi-truck, bi-shield-check</small>
+				</div>
+
+				<div class="mb-3">
+					<label for="servicio-title" class="form-label fw-bold">Título del Servicio</label>
+					<input id="servicio-title" type="text" class="form-control" placeholder="Soporte Técnico" [(ngModel)]="formularioServicio.title" name="title" required />
+				</div>
+
+				<div class="mb-3">
+					<label for="servicio-desc" class="form-label fw-bold">Descripción</label>
+					<textarea id="servicio-desc" class="form-control" placeholder="Descripción del servicio" [(ngModel)]="formularioServicio.desc" name="desc" required></textarea>
+				</div>
+
+				<div class="mb-3">
+					<label for="servicio-badge" class="form-label fw-bold">Etiqueta (Badge)</label>
+					<input id="servicio-badge" type="text" class="form-control" placeholder="24/7, Express, etc" [(ngModel)]="formularioServicio.badge" name="badge" />
+				</div>
+
+				<div class="d-flex gap-2">
+					<button type="submit" class="btn btn-success flex-grow-1">💾 {{ editandoServicioIndex !== null ? 'Guardar Cambios' : 'Agregar Servicio' }}</button>
+					<button type="button" class="btn btn-outline-secondary flex-grow-1" (click)="cancelarEdicionServicios()">❌ Cancelar</button>
+				</div>
+			</form>
+		} @else {
+			<p class="text-muted">No hay servicios. Crea uno nuevo.</p>
+			<button type="button" class="btn btn-success" (click)="iniciarEdicionServicios()">➕ Crear Servicio</button>
+		}
+	</div>
 </div>
