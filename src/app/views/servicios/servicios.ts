@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ServiciosService, Servicio } from '../../services/servicios.service';
 
 @Component({
   selector: 'app-servicios',
@@ -8,11 +9,13 @@ import { CommonModule } from '@angular/common';
   templateUrl: './servicios.html',
   styleUrl: './servicios.css',
 })
-export class Servicios {
-  servicios = [
-    { icon: 'bi-wrench', title: 'Soporte Técnico', desc: 'Asistencia profesional 24/7' },
-    { icon: 'bi-truck', title: 'Envío Express', desc: 'Entrega en 24-48 horas' },
-    { icon: 'bi-shield-check', title: 'Garantía Extendida', desc: 'Protección de tus productos' },
-    { icon: 'bi-arrow-repeat', title: 'Cambios y Devoluciones', desc: 'Sin complicaciones' }
-  ];
+export class Servicios implements OnInit {
+  servicios: Servicio[] = [];
+  private serviciosService = inject(ServiciosService);
+
+  ngOnInit() {
+    this.serviciosService.getServicios().subscribe(servicios => {
+      this.servicios = servicios;
+    });
+  }
 }

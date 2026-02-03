@@ -31,13 +31,28 @@
 		} @else if (editandoNosotros && nosotros) {
 			<!-- FORMULARIO DE EDICIÓN -->
 			<form (ngSubmit)="guardarNosotros()" class="mt-3">
-				<div class="mb-3">
-					<label for="imagen-nosotros" class="form-label fw-bold">URL de Imagen (Una sola para toda la sección)</label>
-					<input id="imagen-nosotros" type="text" class="form-control" placeholder="https://..." [(ngModel)]="formularioNosotros.imagen" name="imagen" required aria-required="true" />
+				<div class="card bg-light p-3 mb-3">
+					<h5 class="card-title fw-bold mb-3">🖼️ Imagen Principal</h5>
+					
+					<div class="mb-3">
+						<label for="imagen-nosotros-url" class="form-label fw-bold">URL de Imagen</label>
+						<input id="imagen-nosotros-url" type="text" class="form-control" placeholder="https://..." [(ngModel)]="formularioNosotros.imagen" name="imagen" aria-label="URL de imagen" />
+					</div>
+
+					<div class="mb-3">
+						<label for="imagen-nosotros-file" class="form-label fw-bold">O Cargar Imagen</label>
+						<input id="imagen-nosotros-file" type="file" class="form-control" accept="image/*" (change)="onImageSelected($event, 'nosotros')" aria-label="Cargar imagen" />
+						<small class="text-muted d-block mt-2">Formatos: JPG, PNG, GIF (máx. 5MB)</small>
+					</div>
+
 					@if (formularioNosotros.imagen) {
-						<div class="mt-2">
-							<small class="text-muted">Previsualización:</small>
-							<img [src]="formularioNosotros.imagen" style="max-height: 150px; border-radius: 5px; margin-top: 5px;" alt="Preview" onerror="this.style.display='none'" />
+						<div class="mt-3">
+							<small class="text-muted d-block mb-2"><strong>Previsualización:</strong></small>
+							<img [src]="formularioNosotros.imagen" 
+								 style="max-height: 200px; border-radius: 5px; margin-top: 5px; border: 2px solid #ccc;" 
+								 alt="Preview" 
+								 onerror="this.style.display='none'" 
+								 class="img-thumbnail" />
 						</div>
 					}
 				</div>
@@ -127,50 +142,133 @@
 		<!-- COLUMNA TABLA PRODUCTOS -->
 		<div class="col-md-7">
 			<section class="card shadow border-0 p-4" role="region" aria-labelledby="inventory-heading">
-				<h2 id="inventory-heading" class="h4">Inventario Actual</h2>
-				<div class="table-responsive mt-3">
-					<table class="table table-hover align-middle" aria-label="Tabla de productos">
-						<thead class="table-light">
-							<tr>
-								<th>Imagen</th>
-								<th>Producto</th>
-								<th>Acciones</th>
-							</tr>
-						</thead>
-						<tbody>
-							@for (p of productos; track p.id) {
-								<tr>
-									<td>
-										<img [src]="p.imagen || 'https://via.placeholder.com/50'" [alt]="'Imagen miniatura de ' + p.nombre" class="rounded product-thumb" />
-									</td>
-									<td>
-										<div class="fw-bold">{{p.nombre}}</div>
-										<div class="text-muted small" aria-label="Precio: {{p.precio}} dólares">${{p.precio}}</div>
-									</td>
-									<td>
-										<button class="btn btn-sm btn-outline-primary me-2" (click)="prepararEdicion(p)" [attr.aria-label]="'Editar producto ' + p.nombre">
-											Editar
-										</button>
-										<button class="btn btn-sm btn-outline-danger" (click)="eliminarProducto(p.id)" [attr.aria-label]="'Eliminar producto ' + p.nombre">
-											Eliminar
-										</button>
-									</td>
-								</tr>
-							}
-						</tbody>
-					</table>
-					@if (cargando) {
-						<div class="text-center py-4" role="status" aria-live="polite">
-							<div class="spinner-border text-primary" role="status">
-								<span class="visually-hidden">Cargando...</span>
-							</div>
-							<p class="text-muted mt-2">Cargando productos...</p>
+				<h2 id="inventory-heading" class="h4 mb-3">📦 Inventario Actual</h2>
+				
+				@if (cargando) {
+					<div class="text-center py-4" role="status" aria-live="polite">
+						<div class="spinner-border text-primary" role="status">
+							<span class="visually-hidden">Cargando...</span>
 						</div>
-					} @else if (productos.length === 0) {
-						<p class="text-muted text-center py-3" role="status">No hay productos. ¡Crea uno nuevo!</p>
-					}
-				</div>
+						<p class="text-muted mt-2">Cargando productos...</p>
+					</div>
+				} @else if (productos.length === 0) {
+					<p class="text-muted text-center py-4" role="status">No hay productos. ¡Crea uno nuevo!</p>
+				} @else {
+					<div class="row g-3">
+						@for (p of productos; track p.id) {
+							<div class="col-12">
+								<div class="card border shadow-sm product-card">
+									<div class="card-body p-3">
+										<div class="row align-items-center">
+											<div class="col-auto">
+												<img [src]="p.imagen || 'https://via.placeholder.com/80'" 
+													 [alt]="'Imagen de ' + p.nombre" 
+													 class="rounded product-thumb-lg"
+													 style="width: 80px; height: 80px; object-fit: cover;" 
+													 onerror="this.src='https://via.placeholder.com/80'" />
+											</div>
+											<div class="col">
+												<h5 class="card-title fw-bold mb-1">{{p.nombre}}</h5>
+												<p class="text-muted small mb-2">{{p.descripcion.substring(0, 100)}}...</p>
+												<div class="d-flex gap-2 align-items-center">
+													<span class="badge bg-success fs-6">${{p.precio}}</span>
+													<span class="badge bg-info small">ID: {{p.id}}</span>
+												</div>
+											</div>
+											<div class="col-auto">
+												<div class="btn-group" role="group">
+													<button type="button" 
+															class="btn btn-sm btn-outline-primary" 
+															(click)="prepararEdicion(p)" 
+															[attr.aria-label]="'Editar producto ' + p.nombre"
+															title="Editar">
+														✏️ Editar
+													</button>
+													<button type="button" 
+															class="btn btn-sm btn-outline-danger" 
+															(click)="eliminarProducto(p.id)" 
+															[attr.aria-label]="'Eliminar producto ' + p.nombre"
+															title="Eliminar">
+														🗑️ Eliminar
+													</button>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						}
+					</div>
+				}
 			</section>
 		</div>
+	</div>
+
+	<!-- SECCIÓN SERVICIOS -->
+	<div class="card shadow border-0 p-4 mt-5 bg-light">
+		<h2 class="h4 text-primary mb-3">⚙️ Gestionar Servicios</h2>
+		
+		@if (!editandoServicios && servicios && servicios.length > 0) {
+			<div class="alert alert-info">
+				<strong>Servicios Actuales:</strong>
+				<div class="row g-3 mt-3">
+					@for (servicio of servicios; track $index) {
+						<div class="col-md-6">
+							<div class="card border">
+								<div class="card-body">
+									<div class="d-flex align-items-start justify-content-between">
+										<div>
+											<h6 class="card-title fw-bold">{{ servicio.title }}</h6>
+											<p class="text-muted small mb-2">{{ servicio.desc }}</p>
+											@if (servicio.badge) {
+												<span class="badge bg-secondary">{{ servicio.badge }}</span>
+											}
+										</div>
+										<div class="btn-group btn-group-sm">
+											<button type="button" class="btn btn-outline-primary" (click)="editarServicio($index)">✏️</button>
+											<button type="button" class="btn btn-outline-danger" (click)="eliminarServicio($index)">🗑️</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					}
+				</div>
+			</div>
+			<button type="button" class="btn btn-warning me-2" (click)="iniciarEdicionServicios()">✏️ Editar Servicios</button>
+			<button type="button" class="btn btn-success" (click)="iniciarEdicionServicios(); formularioServicio = { icon: '', title: '', desc: '', badge: '' }">➕ Agregar Servicio</button>
+		} @else if (editandoServicios) {
+			<!-- FORMULARIO DE EDICIÓN -->
+			<form (ngSubmit)="guardarServicio()" class="mt-3 card bg-white p-4">
+				<div class="mb-3">
+					<label for="servicio-icon" class="form-label fw-bold">Ícono (Bootstrap Icons)</label>
+					<input id="servicio-icon" type="text" class="form-control" placeholder="bi-wrench" [(ngModel)]="formularioServicio.icon" name="icon" />
+					<small class="text-muted">Ej: bi-wrench, bi-truck, bi-shield-check</small>
+				</div>
+
+				<div class="mb-3">
+					<label for="servicio-title" class="form-label fw-bold">Título del Servicio</label>
+					<input id="servicio-title" type="text" class="form-control" placeholder="Soporte Técnico" [(ngModel)]="formularioServicio.title" name="title" required />
+				</div>
+
+				<div class="mb-3">
+					<label for="servicio-desc" class="form-label fw-bold">Descripción</label>
+					<textarea id="servicio-desc" class="form-control" placeholder="Descripción del servicio" [(ngModel)]="formularioServicio.desc" name="desc" required></textarea>
+				</div>
+
+				<div class="mb-3">
+					<label for="servicio-badge" class="form-label fw-bold">Etiqueta (Badge)</label>
+					<input id="servicio-badge" type="text" class="form-control" placeholder="24/7, Express, etc" [(ngModel)]="formularioServicio.badge" name="badge" />
+				</div>
+
+				<div class="d-flex gap-2">
+					<button type="submit" class="btn btn-success flex-grow-1">💾 {{ editandoServicioIndex !== null ? 'Guardar Cambios' : 'Agregar Servicio' }}</button>
+					<button type="button" class="btn btn-outline-secondary flex-grow-1" (click)="cancelarEdicionServicios()">❌ Cancelar</button>
+				</div>
+			</form>
+		} @else {
+			<p class="text-muted">No hay servicios. Crea uno nuevo.</p>
+			<button type="button" class="btn btn-success" (click)="iniciarEdicionServicios()">➕ Crear Servicio</button>
+		}
 	</div>
 </div>

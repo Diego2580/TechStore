@@ -1,4 +1,4 @@
-<div class="bg-light min-vh-100 pb-5">
+<div class="bg-dark min-vh-100 pb-5">
   
   <section class="container py-5 text-center">
     <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill mb-3">Nuestros Servicios</span>
@@ -10,86 +10,20 @@
 
   <section class="container pb-5" aria-label="Lista de servicios detallada">
     <div class="row g-4">
-      
-      <div class="col-md-6 col-lg-4">
-        <article class="service-card">
-          <span class="badge-tag">Desde $599</span>
-          <div class="icon-box">
-            <i class="bi bi-display" aria-hidden="true"></i>
-          </div>
-          <h3 class="h5 fw-bold mb-3">Monitores y Pantallas</h3>
-          <p class="text-muted small">
-            Monitores de alta resolución para gaming, diseño gráfico y oficina. 
-            Desde 24 hasta 49 pulgadas ultrawide.
-          </p>
-        </article>
-      </div>
-
-      <div class="col-md-6 col-lg-4">
-        <article class="service-card">
-          <span class="badge-tag">Intel & AMD</span>
-          <div class="icon-box">
-            <i class="bi bi-cpu" aria-hidden="true"></i>
-          </div>
-          <h3 class="h5 fw-bold mb-3">Procesadores High-End</h3>
-          <p class="text-muted small">
-            Los últimos procesadores Intel Core y AMD Ryzen para máximo rendimiento en renderizado y compilación de código.
-          </p>
-        </article>
-      </div>
-
-      <div class="col-md-6 col-lg-4">
-        <article class="service-card">
-          <span class="badge-tag">NVMe / SSD</span>
-          <div class="icon-box">
-            <i class="bi bi-hdd-network" aria-hidden="true"></i>
-          </div>
-          <h3 class="h5 fw-bold mb-3">Almacenamiento Veloz</h3>
-          <p class="text-muted small">
-            Discos SSD M.2 y soluciones NAS para servidores locales con redundancia de datos.
-          </p>
-        </article>
-      </div>
-
-      <div class="col-md-6 col-lg-4">
-        <article class="service-card">
-          <span class="badge-tag">WiFi 6E</span>
-          <div class="icon-box">
-            <i class="bi bi-router" aria-hidden="true"></i>
-          </div>
-          <h3 class="h5 fw-bold mb-3">Redes y Conectividad</h3>
-          <p class="text-muted small">
-            Routers mesh, switches gestionables y cableado estructurado para tu oficina o hogar.
-          </p>
-        </article>
-      </div>
-
-      <div class="col-md-6 col-lg-4">
-        <article class="service-card">
-          <span class="badge-tag">Enterprise</span>
-          <div class="icon-box">
-            <i class="bi bi-server" aria-hidden="true"></i>
-          </div>
-          <h3 class="h5 fw-bold mb-3">Servidores y DevOps</h3>
-          <p class="text-muted small">
-            Asesoría en CI/CD, configuración de GitLab Runners locales y servidores Linux.
-          </p>
-        </article>
-      </div>
-
-      <div class="col-md-6 col-lg-4">
-        <article class="service-card">
-          <span class="badge-tag">24/7</span>
-          <div class="icon-box">
-            <i class="bi bi-tools" aria-hidden="true"></i>
-          </div>
-          <h3 class="h5 fw-bold mb-3">Servicio Técnico</h3>
-          <p class="text-muted small">
-            Mantenimiento preventivo, limpieza de hardware y reparación de placas con garantía.
-          </p>
-        </article>
-      </div>
-
+      @for (servicio of servicios; track $index) {
+        <div class="col-md-6 col-lg-4">
+          <article class="service-card">
+            @if (servicio.badge) {
+              <span class="badge-tag">{{ servicio.badge }}</span>
+            }
+            <div class="icon-box">
+              <i [class]="'bi ' + servicio.icon" aria-hidden="true"></i>
+            </div>
+            <h3 class="h5 fw-bold mb-3">{{ servicio.title }}</h3>
+            <p class="text-muted small">{{ servicio.desc }}</p>
+          </article>
+        </div>
+      }
     </div>
     
     <div class="text-center mt-5">
