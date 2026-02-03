@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  backendBaseUrl: 'http://localhost:8080'
+  backendBaseUrl: 'https://techstore-hs0k.onrender.com'
 };
